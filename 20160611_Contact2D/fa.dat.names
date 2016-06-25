@@ -1,0 +1,7 @@
+File started at: 2016/06/11 23:35:39
+ 
+Variables in columns of matrix: ./fa.dat
+   1: boundary int: displacement contact normalload over bc 1
+   2: boundary int: displacement contact slipload over bc 1
+   3: simulation: cpu time (s)
+   4: simulation: real time (s)
