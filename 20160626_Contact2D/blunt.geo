@@ -1,6 +1,7 @@
 cl__1 = 1e+22;
 Radius = 1;
 RadiusAxis = 0.5;
+Resolution = 100;
 
 Point(1) = {0, Radius, 0, cl__1};
 
@@ -29,10 +30,10 @@ Line Loop(6) = {5, 6, 7, 8};
 
 Plane Surface(7) = {5, 6};
 
-Transfinite Line {3, 7} = 30 Using Progression 1;
-Transfinite Line {4, 8} = 30 Using Progression 1;
-Transfinite Line {1, 5} = 30 Using Progression 1;
-Transfinite Line {2, 6} = 30 Using Progression 1;
+Transfinite Line {3, 7} = Resolution Using Progression 1;
+Transfinite Line {4, 8} = Resolution Using Progression 1;
+Transfinite Line {1, 5} = Resolution Using Progression 1;
+Transfinite Line {2, 6} = Resolution Using Progression 1;
 //Transfinite Surface {7};
 Recombine Surface {7};
 
