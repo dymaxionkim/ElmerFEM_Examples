@@ -1,0 +1,141 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory ""
+End
+
+Simulation
+  Max Output Level = 3
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Scanning
+  Steady State Max Iterations = 1
+  Output Intervals = 20
+  Timestepping Method = BDF
+  BDF Order = 1
+  Timestep intervals = 20
+  Timestep Sizes = 1
+  Solver Input File = case.sif
+  Post File = case.ep
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.67e-08
+  Permittivity of Vacuum = 8.8542e-12
+  Boltzmann Constant = 1.3807e-23
+  Unit Charge = 1.602e-19
+End
+
+Body 1
+  Target Bodies(1) = 1
+  Name = "Body 1"
+  Equation = 1
+  Material = 1
+End
+
+Body 2
+  Target Bodies(1) = 2
+  Name = "Body 2"
+  Equation = 1
+  Material = 2
+End
+
+Solver 1
+  Equation = Result Output
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Output File Name = case
+  Output Format = Vtu
+  Exec Solver = After Timestep
+End
+
+Solver 2
+  Equation = Linear elasticity
+  Procedure = "StressSolve" "StressSolver"
+  Variable = -dofs 3 Displacement
+  Calculate Loads = True
+Apply Contact BCs = Logical True
+  Calculate Stresses = True
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 10
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 50000
+  Linear System Convergence Tolerance = 1.0e-4
+  BiCGstabl polynomial degree = 4
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = True
+  Linear System Residual Output = 100
+  Linear System Precondition Recompute = 1
+End
+
+Equation 1
+  Name = "Equation 1"
+  Calculate Stresses = True
+  Plane Stress = True
+  Active Solvers(2) = 1 2
+End
+
+Material 1
+  Name = "Steel (carbon - generic)"
+  Heat expansion Coefficient = 13.8e-6
+  Heat Conductivity = 44.8
+  Sound speed = 5100.0
+  Heat Capacity = 1265.0
+  Mesh Poisson ratio = 0.285
+  Density = 7850.0
+  Poisson ratio = 0.285
+  Youngs modulus = 200.0e9
+End
+
+Material 2
+  Name = "Polycarbonate (generic)"
+  Heat expansion Coefficient = 67.0e-6
+  Heat Conductivity = 0.205
+  Heat Capacity = 1250.0
+  Mesh Poisson ratio = 0.37
+  Density = 1220.0
+  Poisson ratio = 0.37
+  Youngs modulus = 2.2e9
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 22 
+  Name = "Support"
+  Displacement 3 = 0
+  Displacement 2 = 0
+  Displacement 1 = 0
+End
+
+Boundary Condition 2
+  Target Boundaries(1) = 7 
+  Name = "Contact"
+Mortar BC = Integer 3
+Plane Projector = Logical True
+Galerkin Projector = Logical True
+Normal-Tangential Displacement = Logical True
+!Mass Consistant Normals = Logical True
+!Tie Contact = Logical True
+End
+
+Boundary Condition 3
+  Target Boundaries(1) = 30 
+  Name = "UpperBase"
+End
+
+Boundary Condition 4
+  Target Boundaries(1) = 31 
+  Name = "Axis"
+  Displacement 2 = Variable Time; Real MATC "-0.005*sin(2*3.14*tx/20)"
+End
