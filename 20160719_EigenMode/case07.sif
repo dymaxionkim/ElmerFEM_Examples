@@ -1,0 +1,98 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory ""
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Steady state
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Solver Input File = case07.sif
+  Post File = case07.ep
+  Coordinate Scaling = Real 0.001
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.67e-08
+  Permittivity of Vacuum = 8.8542e-12
+  Boltzmann Constant = 1.3807e-23
+  Unit Charge = 1.602e-19
+End
+
+Body 1
+  Target Bodies(1) = 1
+  Name = "Body 1"
+  Equation = 1
+  Material = 1
+End
+
+Solver 2
+  Equation = Linear elasticity
+  Calculate Stresses = True
+  Eigen System Values = 7
+  Calculate Loads = True
+  Eigen System Select = Smallest magnitude
+  Procedure = "StressSolve" "StressSolver"
+  Variable = -dofs 3 Displacement
+  Eigen Analysis = True
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Direct
+  Linear System Direct Method = Umfpack
+End
+
+Solver 1
+  Equation = Result Output
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Output Format = Vtu
+  Output File Name = case07
+  Exec Solver = After Timestep
+End
+
+Equation 1
+  Name = "Equation 1"
+  Calculate Stresses = True
+  Plane Stress = True
+  Active Solvers(2) = 2 1
+End
+
+Material 1
+  Name = "Polycarbonate (generic)"
+  Youngs modulus = 2.2e9
+  Heat Conductivity = 0.205
+  Poisson ratio = 0.37
+  Youngs modulus = 2.2e9
+  Heat Capacity = 1250.0
+  Youngs modulus = 2.2e9
+  Poisson ratio = 0.37
+  Heat expansion Coefficient = 67.0e-6
+  Poisson ratio = 0.37
+  Porosity Model = Always saturated
+  Mesh Poisson ratio = 0.37
+  Density = 1220.0
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 1 
+  Name = "Fix"
+  Displacement 3 = 0
+  Displacement 1 = 0
+  Displacement 2 = 0
+End
