@@ -1,0 +1,6 @@
+
+
+ffmpeg -i movie.gif movie.avi
+ffmpeg -i movie.avi -ss 2.9 -t 3.6 movie_clip.avi
+ffmpeg -i "concat:movie_clip.avi|movie_clip.avi|movie_clip.avi" -c copy 20160726_Contact_CalculiX.avi
+
