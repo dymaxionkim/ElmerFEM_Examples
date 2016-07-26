@@ -1,0 +1,12 @@
+*INCLUDE, INPUT=allinone.inp
+*INCLUDE, INPUT=add_material.inp
+*INCLUDE, INPUT=add_support.inp
+*INCLUDE, INPUT=add_contact.inp
+*STEP
+*FREQUENCY
+10
+*NODE FILE
+U
+*EL FILE
+S
+*END STEP
