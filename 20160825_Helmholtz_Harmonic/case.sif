@@ -1,0 +1,183 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory ""
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Steady state
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Solver Input File = case.sif
+  Post File = case.ep
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.67e-08
+  Permittivity of Vacuum = 8.8542e-12
+  Boltzmann Constant = 1.3807e-23
+  Unit Charge = 1.602e-19
+$f = 2500
+End
+
+Body 1
+  Target Bodies(1) = 1
+  Name = "Body Property 1"
+  Equation = 3
+  Material = 2
+End
+
+Body 2
+  Target Bodies(1) = 2
+  Name = "Body Property 2"
+  Equation = 2
+  Material = 1
+  Body Force = 1
+End
+
+Solver 1
+  Equation = Result Output
+  Save Geometry Ids = True
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Output Format = Vtu
+  Output File Name = case
+  Exec Solver = After Simulation
+End
+
+Solver 2
+  Equation = Linear elasticity
+  Procedure = "StressSolve" "StressSolver"
+  Variable = -dofs 3 Displacement
+  Frequency = $f
+  Harmonic Analysis = True
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Direct
+  Linear System Direct Method = Umfpack
+End
+
+Solver 3
+  Equation = Helmholtz Equation
+  Variable = -dofs 2 Pressure Wave
+Displacement Variable EigenMode = Integer 1
+Frequency = $f
+Nonlinear Update Exported Variables = Logical True
+  Procedure = "HelmholtzSolve" "HelmholtzSolver"
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1.0e-10
+  BiCGstabl polynomial degree = 2
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = False
+  Linear System Residual Output = 1
+  Linear System Precondition Recompute = 1
+End
+
+Equation 1
+  Name = "Equation_ResultOutput"
+  Active Solvers(1) = 1
+End
+
+Equation 2
+  Name = "Equation_LinearElastic"
+  Active Solvers(1) = 2
+End
+
+Equation 3
+  Name = "Equation_Helmholtz"
+  Active Solvers(1) = 3
+End
+
+Material 1
+  Name = "Steel (carbon - generic)"
+  Electric Conductivity = 1.449e6
+  Youngs modulus = 200.0e9
+  Heat Conductivity = 44.8
+  Electric Conductivity = 1.449e6
+  Electric Conductivity = 1.449e6
+  Poisson ratio = 0.285
+  Youngs modulus = 200.0e9
+  Heat Capacity = 1265.0
+  Youngs modulus = 200.0e9
+  Sound speed = 5100.0
+  Poisson ratio = 0.285
+  Heat expansion Coefficient = 13.8e-6
+  Poisson ratio = 0.285
+  Porosity Model = Always saturated
+  Mesh Poisson ratio = 0.285
+  Electric Conductivity = 1.449e6
+  Density = 7850.0
+End
+
+Material 2
+  Name = "Air (room temperature)"
+  Relative Permeability = 1.00000037
+  Heat Conductivity = 0.0257
+  Heat Capacity = 1005.0
+  Relative Permittivity = 1.00059
+  Relative Permeability = 1.00000037
+  Viscosity = 1.983e-5
+  Viscosity = 1.983e-5
+  Sound speed = 343.0
+  Heat expansion Coefficient = 3.43e-3
+  Relative Permittivity = 1.00059
+  Porosity Model = Always saturated
+  Relative Permittivity = 1.00059
+  Density = 1.205
+  Relative Permeability = 1.00000037
+End
+
+Body Force 1
+  Name = "VibratingForce"
+  Stress Bodyforce 3 = 1e2
+Stress Bodyforce 3 im = Real 0.0
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 1 
+  Name = "OPEN"
+  Wave impedance 1 = 340
+End
+
+Boundary Condition 2
+  Target Boundaries(1) = 8 
+  Name = "FIX"
+  Displacement 3 = 0
+  Displacement 1 = 0
+  Displacement 2 = 0
+End
+
+Boundary Condition 3
+  Target Boundaries(1) = 2 
+  Name = "INTERFACE"
+Structure Interface = Logical True
+End
