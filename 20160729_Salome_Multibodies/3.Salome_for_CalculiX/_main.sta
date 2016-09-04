@@ -1,0 +1,5 @@
+SUMMARY OF JOB INFORMATION
+  STEP      INC     ATT  ITRS     TOT TIME     STEP TIME      INC TIME
+     1          1     1     2  0.100000E+00  0.100000E+00  0.100000E+00
+     1          2     1     2  0.200000E+00  0.200000E+00  0.100000E+00
+     1          3     1U   60  0.200000E+00  0.200000E+00  0.150000E+00

@@ -1,0 +1,11 @@
+! ----- names for bodies -----
+$ BOX_LOWER = 1
+$ ORING = 2
+$ BOX_UPPER = 3
+! ----- names for boundaries -----
+$ BOX_LOWER_FIX = 4
+$ BOX_LOWER_CONTACT = 5
+$ ORING_CONTACT = 6
+$ BOX_UPPER_CONTACT = 7
+$ BOX_UPPER_HOLD = 8
+$ bnry9 = 9

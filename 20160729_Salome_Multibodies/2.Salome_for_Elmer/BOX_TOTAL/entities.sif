@@ -1,0 +1,38 @@
+!------ Skeleton for body section -----
+Body 1
+  Name = BOX_LOWER
+End
+
+Body 2
+  Name = ORING
+End
+
+Body 3
+  Name = BOX_UPPER
+End
+
+!------ Skeleton for boundary section -----
+Boundary Condition 1
+  Name = BOX_LOWER_FIX
+End
+
+Boundary Condition 2
+  Name = BOX_LOWER_CONTACT
+End
+
+Boundary Condition 3
+  Name = ORING_CONTACT
+End
+
+Boundary Condition 4
+  Name = BOX_UPPER_CONTACT
+End
+
+Boundary Condition 5
+  Name = BOX_UPPER_HOLD
+End
+
+Boundary Condition 6
+  Name = bnry9
+End
+

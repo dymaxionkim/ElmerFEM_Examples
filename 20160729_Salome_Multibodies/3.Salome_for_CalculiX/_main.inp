@@ -1,0 +1,16 @@
+*INCLUDE, INPUT=allinone.inp
+*INCLUDE, INPUT=add_material.inp
+*INCLUDE, INPUT=add_support.inp
+*INCLUDE, INPUT=add_contact.inp
+*STEP,NLGEOM
+*STATIC
+0.1,1
+  *NODE FILE 
+U,
+  *EL FILE
+S,
+*NODE PRINT,NSET=BOX_LOWER_FIX
+RF
+*NODE PRINT,NSET=BOX_UPPER_HOLE
+RF
+*END STEP

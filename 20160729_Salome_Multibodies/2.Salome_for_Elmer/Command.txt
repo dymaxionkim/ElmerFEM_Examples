@@ -1,0 +1,3 @@
+
+ElmerGrid 8 2 BOX_TOTAL.unv -removelowdim
+
