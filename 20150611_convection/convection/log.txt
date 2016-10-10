@@ -1,0 +1,4 @@
+ElmerSolver: *** Elmer Solver: ALL DONE ***
+ElmerSolver: The end
+SOLVER TOTAL TIME(CPU,REAL):       924.73     1542.56
+ELMER SOLVER FINISHED AT: 2015/06/11 21:57:32

@@ -1,0 +1,104 @@
+Header
+CHECK KEYWORDS Warn
+Mesh DB "." "."
+Include Path ""
+Results Directory ""
+End
+
+Simulation
+Max Output Level = 3
+Coordinate System = "Cartesian 2D"
+Coordinate Mapping (3) = 1 2 3
+Simulation Type = "Steady State"
+Steady State Max Iterations = 10
+Solver Input File = "steady.sif"
+Output File = "restart.res"
+Coordinate Scaling = Real 0.001
+End
+
+Constants
+Gravity (4) = 0 0 -1 9.82
+End
+
+Body 1
+Name = "Fluid"
+Target Bodies (1) = 1
+Equation = 1
+Material = 1
+End
+
+Equation 1
+Name = "Fluid"
+Active Solvers (1) = 1
+Navier-Stokes = True
+End
+
+Solver 1
+Equation = Navier-Stokes
+Linear System Solver = Iterative
+Linear System Scaling = Logical False
+Linear System Direct Method = UMFPACK
+Linear System Iterative Method = BiCGStab
+Linear System Convergence Tolerance = 1.0e-6
+Linear System Max Iterations = 200
+Linear System Preconditioning = ILU2
+
+Nonlinear System Convergence Tolerance = Real 1.0e-7
+Nonlinear System Max Iterations = Integer 100
+Nonlinear System Relaxation Factor = Real 0.8
+Nonlinear System Newton After Iterations = 15
+Nonlinear System Newton After Tolerance = 1.0e-3
+
+Steady State Convergence Tolerance = 1.0e-6
+
+stabilize = True
+Div Discretization = True
+End
+
+Material 1
+Name = Air
+Density = 1.0
+Viscosity = 1.0e-6
+End
+
+Boundary Condition 1
+Name = "Inlet"
+Target Boundaries (1) = 1
+Velocity 1 = 0.005
+Velocity 2 = 0
+Velocity 3 = 0
+End
+
+Boundary Condition 2
+Name = "Outlet"
+Target Boundaries (1) = 2
+Pressure = 0
+End
+
+Boundary Condition 3
+Name = "Wall"
+Target Boundaries (1) = 3
+Velocity 1 = 0
+Velocity 2 = 0
+Velocity 3 = 0
+End
+
+Boundary Condition 4
+Name = "Wall"
+Target Boundaries (1) = 4
+Velocity 1 = 0
+Velocity 2 = 0
+Velocity 3 = 0
+End
+
+Solver 2
+Exec Solver = after all
+Equation = "ResultOutput"
+Procedure = "ResultOutputSolve" "ResultOutputSolver"
+Output File Name = "steady"
+Output Format = vtu
+Vtu Format = Logical True
+Vector Field 1 = Velocity
+Scalar Field 1 = Pressure
+End
+

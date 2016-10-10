@@ -1,0 +1,19 @@
+     501 0.1496E-07
+ERROR:: IterSolve: Failed convergence tolerances.
+ComputeChange: NS (ITER=7) (NRM,RELC): ( 0.36396319     0.89351969E-07 ) :: navier-stokes
+FlowSolve: iter:    7 Assembly: (s)    6.92   48.51
+FlowSolve: iter:    7 Solve:    (s)   45.90  321.28
+FlowSolve:  Result Norm     :   0.36396319057830040
+FlowSolve:  Relative Change :    8.9351968601939578E-008
+SingleSolver: Attempting to call solver
+SingleSolver: Solver Equation string is: result output
+ResultOutputSolver: -------------------------------------
+ResultOutputSolver: Dimension of mesh: 2
+ResultOutputSolver: Saving in unstructured VTK XML (.vtu) format
+WriteVtuFile: Writing body and BC indexes
+ResultOutputSolver: -------------------------------------
+ElmerSolver: *** Elmer Solver: ALL DONE ***
+ElmerSolver: The end
+SOLVER TOTAL TIME(CPU,REAL):     62117.50    62321.43
+ELMER SOLVER FINISHED AT: 2015/06/09 03:34:16
+dong@dong-HP-Compaq-6710b-GM504PC-ABG:~/WORK/20150608_elmer_vortex$ 

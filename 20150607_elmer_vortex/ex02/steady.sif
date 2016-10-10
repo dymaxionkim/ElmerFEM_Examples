@@ -1,0 +1,108 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory ""
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Steady state
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Solver Input File = steady.sif
+  Post File = steady.ep
+Coordinate Scaling = Real 0.001
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.67e-08
+  Permittivity of Vacuum = 8.8542e-12
+  Boltzmann Constant = 1.3807e-23
+  Unit Charge = 1.602e-19
+End
+
+Body 1
+  Target Bodies(1) = 1
+  Name = "Body 1"
+  Equation = 1
+  Material = 1
+End
+
+Solver 1
+  Equation = Result Output
+  Single Precision = True
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Save Geometry Ids = True
+  Output File Name = steady
+  Output Format = Vtu
+  Exec Solver = After Timestep
+End
+
+Solver 2
+  Equation = Navier-Stokes
+  Procedure = "FlowSolve" "FlowSolver"
+  Variable = Flow Solution[Velocity:2 Pressure:1]
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = False
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 15
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1.0e-10
+  BiCGstabl polynomial degree = 2
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = False
+  Linear System Residual Output = 1
+  Linear System Precondition Recompute = 1
+End
+
+Equation 1
+  Name = "Equation 1"
+  Active Solvers(2) = 1 2
+End
+
+Material 1
+  Name = "Air (room temperature)"
+  Heat Conductivity = 0.0257
+  Heat Capacity = 1005.0
+  Density = 1.205
+  Relative Permittivity = 1.00059
+  Viscosity = 1.983e-5
+  Sound speed = 343.0
+  Heat expansion Coefficient = 3.43e-3
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 1 
+  Name = "Inlet"
+  Velocity 3 = 0
+  Velocity 1 = 0.005
+  Velocity 2 = 0
+End
+
+Boundary Condition 2
+  Target Boundaries(1) = 2 
+  Name = "Outlet"
+  External Pressure = 0
+End
+
+Boundary Condition 3
+  Target Boundaries(4) = 3 4 5 6 
+  Name = "Wall"
+  Noslip wall BC = True
+End
