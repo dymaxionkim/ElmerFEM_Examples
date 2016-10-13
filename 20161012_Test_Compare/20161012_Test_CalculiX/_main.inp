@@ -1,0 +1,17 @@
+*INCLUDE, INPUT=allinone.inp
+*INCLUDE, INPUT=add_material.inp
+*INCLUDE, INPUT=add_support.inp
+*INCLUDE, INPUT=add_contact.inp
+
+
+*STEP
+*STATIC
+*INCLUDE, INPUT=add_dload.inp
+*INCLUDE, INPUT=add_boundary.inp
+  *NODE FILE 
+U,
+  *EL FILE
+S,
+*NODE PRINT,NSET=Group_2
+RF
+*END STEP

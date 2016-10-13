@@ -1,0 +1,110 @@
+DYNAMIC START
+*-------------------------------------------------------------------------------
+Z88Aurora Version 3
+-------------------------------------------------------------------------------*
+
+*-------------------------------------------------------------------------------
+GLOBAL
+-------------------------------------------------------------------------------*
+
+GLOBAL START
+   SIMCASE         11
+   ICORE           2
+GLOBAL END
+
+*-------------------------------------------------------------------------------
+LINEAR SOLVER
+-------------------------------------------------------------------------------*
+
+LMSOLVER START
+   ICFLAG          4
+   SOLVER_SPEEDUP  -8
+   MAXIT           10000
+   EPS             1.000000E-06
+   ALPHA           1.000000E-04
+   OMEGA           1.20
+LMSOLVER END
+
+*-------------------------------------------------------------------------------
+NONLINEAR SOLVER
+-------------------------------------------------------------------------------*
+
+NLSOLVER START
+   ICFLAG          3
+   SOLVER_SPEEDUP  -8
+   MAXIT           20000
+   EPS             1.000000E-08
+   ALPHA           1.000000E-04
+   OMEGA           1.000000E+00
+   NLFLAG          1
+   NLAERH          25
+   MAXNLIT         1000
+   EXIT            1
+   TOL             1.000000E-07
+   DELTA           1.000000E-04
+   MODN_STEP       1
+   UPDATE          0
+   SFLAG           1
+   AUTOGAUSS       0
+   PLOTFLAG        0
+   DIFF_FLAG       0
+   OUTPUTFLAG      1
+   OUT_DEFGRAD     0
+   OUT_LAMBDA      0
+   OUT_PK1S        0
+   OUT_PK2S        0
+   OUT_CAUCHY      1
+   OUT_CMAT        0
+   OUT_EPSILON     0
+   OUT_ENERGIE     0
+   OUT_INT90FFS    1
+   OUT_INT120FFS   0
+   OUT_INT360FFS   0
+   OUT_GESKRAEFTE  0
+   PARSP           0
+   DELTA_ANZ_HW    1.000000E-04
+   ELKORR          2
+   ELEFORM         1
+   BGLAENG         1.000000E+00
+   LASTST          0
+   SPRING_BACK     0
+NLSOLVER END
+
+*-------------------------------------------------------------------------------
+VIBRATION SOLVER
+-------------------------------------------------------------------------------*
+
+ESSOLVER START
+   ICFLAG          5
+   MAXIT           20000
+   EPS             1.000000E-08
+   EIGDIFF         1.000000E-06
+   EIGNUM          15
+   EIGSTEP         50
+ESSOLVER END
+
+*-------------------------------------------------------------------------------
+THERMAL SOLVER
+-------------------------------------------------------------------------------*
+
+TMSOLVER START
+   ICFLAG          4
+   SOLVER_SPEEDUP  -8
+   MAXIT           10000
+   EPS             1.000000E-06
+   ALPHA           1.000000E-04
+   OMEGA           1.20
+   THERMOMODE      1
+   THERMOMECHANIC  0
+TMSOLVER END
+
+*-------------------------------------------------------------------------------
+STRESS
+-------------------------------------------------------------------------------*
+
+STRESS START
+   KDFLAG          0
+   ISFLAG          1
+STRESS END
+
+DYNAMIC END

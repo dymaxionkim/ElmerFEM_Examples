@@ -1,0 +1,49 @@
+DEBUT();
+
+MA=DEFI_MATERIAU(ELAS=_F(E=2.1e+11,
+                         NU=0.3,),);
+
+MAIL=LIRE_MAILLAGE(FORMAT='MED',);
+
+MAIL=MODI_MAILLAGE(reuse=MAIL,
+                   MAILLAGE=MAIL,
+                   ORIE_PEAU_3D=_F(GROUP_MA=('Group_3',),),
+                   );
+
+MODE=AFFE_MODELE(MAILLAGE=MAIL,
+                 AFFE=_F(TOUT='OUI',
+                         PHENOMENE='MECANIQUE',
+                         MODELISATION='3D',),);
+
+MATE=AFFE_MATERIAU(MAILLAGE=MAIL,
+                   AFFE=_F(TOUT='OUI',
+                           MATER=MA,),);
+
+CHAR=AFFE_CHAR_MECA(MODELE=MODE,
+                    DDL_IMPO=(
+                        _F(GROUP_MA='Group_2',
+                           DX=0.0,
+                           DY=0.0,
+                           DZ=0.0,),
+                        ),
+                    PRES_REP=(
+                        _F(GROUP_MA='Group_3',
+                           PRES=100.0,),
+                        ),
+                    );
+
+RESU=MECA_STATIQUE(MODELE=MODE,
+                   CHAM_MATER=MATE,
+                   EXCIT=_F(CHARGE=CHAR,),);
+
+RESU=CALC_CHAMP(reuse=RESU,
+               RESULTAT=RESU,
+               CONTRAINTE=('SIGM_ELNO','SIGM_NOEU'),
+               CRITERES=('SIEQ_ELNO','SIEQ_NOEU',),);
+
+IMPR_RESU(FORMAT='MED',
+          UNITE=80,
+          RESU=_F(RESULTAT=RESU,
+                  NOM_CHAM=('SIGM_NOEU','SIEQ_NOEU','DEPL',),),);
+
+FIN();

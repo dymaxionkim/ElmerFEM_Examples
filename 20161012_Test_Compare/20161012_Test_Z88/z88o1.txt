@@ -1,0 +1,264 @@
+output file Z88O1.TXT : constraints, produced by Z88R V15.0B
+                        ***********
+
+number of given constraints: 87
+
+  node#    22   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#    22   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#    22   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#    28   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#    28   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#    28   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#    29   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#    29   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#    29   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#    30   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#    30   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#    30   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#    31   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#    31   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#    31   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#    32   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#    32   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#    32   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#    59   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#    59   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#    59   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   100   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   100   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   100   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   101   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   101   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   101   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   102   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   102   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   102   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   103   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   103   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   103   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   104   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   104   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   104   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   105   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   105   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   105   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   106   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   106   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   106   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   107   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   107   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   107   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   108   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   108   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   108   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   109   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   109   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   109   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   110   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   110   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   110   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   111   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   111   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   111   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   112   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   112   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   112   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   242   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   242   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   242   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   243   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   243   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   243   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   244   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   244   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   244   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   245   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   245   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   245   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   246   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   246   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   246   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   247   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   247   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   247   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   248   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   248   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   248   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   249   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   249   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   249   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+  node#   250   DOF 1  lo/di flag 2   displacement  +0.0000000E+00
+  node#   250   DOF 2  lo/di flag 2   displacement  +0.0000000E+00
+  node#   250   DOF 3  lo/di flag 2   displacement  +0.0000000E+00
+
+output file Z88O1.TXT : surface loads
+                        *************
+
+number of given surface loads: 166
+
+element#    12   pressure  +5.00000E+02   nodes   371   332   331
+element#    39   pressure  +5.00000E+02   nodes   359   360   320
+element#    40   pressure  +5.00000E+02   nodes   352   351   361
+element#    60   pressure  +5.00000E+02   nodes    89   346    90
+element#    72   pressure  +5.00000E+02   nodes   319   358   359
+element#    74   pressure  +5.00000E+02   nodes   350    94    93
+element#   111   pressure  +5.00000E+02   nodes   328   367   368
+element#   121   pressure  +5.00000E+02   nodes    80    58   120
+element#   139   pressure  +5.00000E+02   nodes   363   364   324
+element#   145   pressure  +5.00000E+02   nodes   335   375   336
+element#   146   pressure  +5.00000E+02   nodes   374   375   335
+element#   155   pressure  +5.00000E+02   nodes   332    47   331
+element#   178   pressure  +5.00000E+02   nodes    88    87   344
+element#   190   pressure  +5.00000E+02   nodes   339   374   373
+element#   201   pressure  +5.00000E+02   nodes   330    45   329
+element#   208   pressure  +5.00000E+02   nodes    46   330   331
+element#   209   pressure  +5.00000E+02   nodes    36   320   321
+element#   215   pressure  +5.00000E+02   nodes   321   360   361
+element#   217   pressure  +5.00000E+02   nodes   322   321   361
+element#   220   pressure  +5.00000E+02   nodes   319   318   358
+element#   222   pressure  +5.00000E+02   nodes    48   333    49
+element#   228   pressure  +5.00000E+02   nodes   330   369   370
+element#   234   pressure  +5.00000E+02   nodes   344    87   343
+element#   236   pressure  +5.00000E+02   nodes   327   366   367
+element#   239   pressure  +5.00000E+02   nodes   356   110   355
+element#   240   pressure  +5.00000E+02   nodes   109   355   110
+element#   247   pressure  +5.00000E+02   nodes   335    50   334
+element#   250   pressure  +5.00000E+02   nodes   100    99   109
+element#   261   pressure  +5.00000E+02   nodes   349    93    92
+element#   300   pressure  +5.00000E+02   nodes    82    81   338
+element#   318   pressure  +5.00000E+02   nodes    88   345    89
+element#   322   pressure  +5.00000E+02   nodes   368   369   329
+element#   324   pressure  +5.00000E+02   nodes   111   318   112
+element#   327   pressure  +5.00000E+02   nodes   319    34   318
+element#   333   pressure  +5.00000E+02   nodes    96   352   353
+element#   359   pressure  +5.00000E+02   nodes   357   375   337
+element#   361   pressure  +5.00000E+02   nodes   373   374   334
+element#   369   pressure  +5.00000E+02   nodes   318    34    33
+element#   373   pressure  +5.00000E+02   nodes   345   368   367
+element#   397   pressure  +5.00000E+02   nodes   336   375   357
+element#   401   pressure  +5.00000E+02   nodes    85    84   341
+element#   403   pressure  +5.00000E+02   nodes   372   341   340
+element#   412   pressure  +5.00000E+02   nodes   349   364   363
+element#   416   pressure  +5.00000E+02   nodes   372   373   333
+element#   431   pressure  +5.00000E+02   nodes   326    42    41
+element#   454   pressure  +5.00000E+02   nodes    33    32   112
+element#   470   pressure  +5.00000E+02   nodes   343   369   344
+element#   471   pressure  +5.00000E+02   nodes   323   363   324
+element#   483   pressure  +5.00000E+02   nodes   343    87    86
+element#   485   pressure  +5.00000E+02   nodes    49   334    50
+element#   491   pressure  +5.00000E+02   nodes   328    43   327
+element#   500   pressure  +5.00000E+02   nodes   327   367   328
+element#   503   pressure  +5.00000E+02   nodes   352    95   351
+element#   536   pressure  +5.00000E+02   nodes    40   324   325
+element#   561   pressure  +5.00000E+02   nodes   328   329    44
+element#   565   pressure  +5.00000E+02   nodes    41    40   325
+element#   573   pressure  +5.00000E+02   nodes    83   340    84
+element#   579   pressure  +5.00000E+02   nodes   321   320   360
+element#   582   pressure  +5.00000E+02   nodes   352    96    95
+element#   585   pressure  +5.00000E+02   nodes   355    98   354
+element#   586   pressure  +5.00000E+02   nodes   326   365   366
+element#   611   pressure  +5.00000E+02   nodes   363   362   350
+element#   621   pressure  +5.00000E+02   nodes    96   353    97
+element#   623   pressure  +5.00000E+02   nodes    34   319    35
+element#   637   pressure  +5.00000E+02   nodes   345   346    89
+element#   640   pressure  +5.00000E+02   nodes   118   117   336
+element#   645   pressure  +5.00000E+02   nodes    84   340   341
+element#   655   pressure  +5.00000E+02   nodes   356   355   358
+element#   678   pressure  +5.00000E+02   nodes   348    92    91
+element#   700   pressure  +5.00000E+02   nodes   337   119   357
+element#   701   pressure  +5.00000E+02   nodes   357   119   118
+element#   710   pressure  +5.00000E+02   nodes   364   349   348
+element#   713   pressure  +5.00000E+02   nodes   364   325   324
+element#   720   pressure  +5.00000E+02   nodes   371   341   372
+element#   730   pressure  +5.00000E+02   nodes   340   373   372
+element#   731   pressure  +5.00000E+02   nodes   337    80   120
+element#   751   pressure  +5.00000E+02   nodes   321   322    37
+element#   754   pressure  +5.00000E+02   nodes   340    83   339
+element#   756   pressure  +5.00000E+02   nodes    46   331    47
+element#   761   pressure  +5.00000E+02   nodes    37    36   321
+element#   763   pressure  +5.00000E+02   nodes   320    36    35
+element#   764   pressure  +5.00000E+02   nodes    42   327    43
+element#   769   pressure  +5.00000E+02   nodes   361   362   322
+element#   777   pressure  +5.00000E+02   nodes    86   342   343
+element#   779   pressure  +5.00000E+02   nodes   342    86    85
+element#   783   pressure  +5.00000E+02   nodes   361   360   352
+element#   812   pressure  +5.00000E+02   nodes   349    92   348
+element#   834   pressure  +5.00000E+02   nodes   117    52   336
+element#   845   pressure  +5.00000E+02   nodes   117    23    52
+element#   852   pressure  +5.00000E+02   nodes   328   368   329
+element#   858   pressure  +5.00000E+02   nodes   328    44    43
+element#   878   pressure  +5.00000E+02   nodes   375   374   338
+element#   884   pressure  +5.00000E+02   nodes   327   326   366
+element#   885   pressure  +5.00000E+02   nodes   327    42   326
+element#   899   pressure  +5.00000E+02   nodes   326    41   325
+element#   907   pressure  +5.00000E+02   nodes   337   375   338
+element#   913   pressure  +5.00000E+02   nodes   365   348   347
+element#   916   pressure  +5.00000E+02   nodes   353   360   359
+element#   919   pressure  +5.00000E+02   nodes   365   325   364
+element#   926   pressure  +5.00000E+02   nodes    40    39   324
+element#   928   pressure  +5.00000E+02   nodes   318    33   112
+element#   933   pressure  +5.00000E+02   nodes    95    94   351
+element#   940   pressure  +5.00000E+02   nodes   354   353   359
+element#   942   pressure  +5.00000E+02   nodes    97   353   354
+element#   943   pressure  +5.00000E+02   nodes   322    38    37
+element#   946   pressure  +5.00000E+02   nodes   341   371   342
+element#   956   pressure  +5.00000E+02   nodes   333   332   372
+element#   957   pressure  +5.00000E+02   nodes   333    48   332
+element#   968   pressure  +5.00000E+02   nodes   350    93   349
+element#   985   pressure  +5.00000E+02   nodes   362   363   323
+element#   999   pressure  +5.00000E+02   nodes    44   329    45
+element#  1000   pressure  +5.00000E+02   nodes   345   344   368
+element#  1005   pressure  +5.00000E+02   nodes   370   342   371
+element#  1018   pressure  +5.00000E+02   nodes   339   338   374
+element#  1026   pressure  +5.00000E+02   nodes    39    38   323
+element#  1027   pressure  +5.00000E+02   nodes   373   340   339
+element#  1049   pressure  +5.00000E+02   nodes   323   322   362
+element#  1054   pressure  +5.00000E+02   nodes   339    82   338
+element#  1059   pressure  +5.00000E+02   nodes    94   350   351
+element#  1064   pressure  +5.00000E+02   nodes   362   361   351
+element#  1078   pressure  +5.00000E+02   nodes   355    99    98
+element#  1080   pressure  +5.00000E+02   nodes   110   356   111
+element#  1089   pressure  +5.00000E+02   nodes   337   338    81
+element#  1099   pressure  +5.00000E+02   nodes   343   342   370
+element#  1111   pressure  +5.00000E+02   nodes   343   370   369
+element#  1113   pressure  +5.00000E+02   nodes   345   367   346
+element#  1137   pressure  +5.00000E+02   nodes   356   318   111
+element#  1139   pressure  +5.00000E+02   nodes   356   358   318
+element#  1144   pressure  +5.00000E+02   nodes   119   337   120
+element#  1146   pressure  +5.00000E+02   nodes   335   336    51
+element#  1148   pressure  +5.00000E+02   nodes    51    50   335
+element#  1177   pressure  +5.00000E+02   nodes   360   353   352
+element#  1178   pressure  +5.00000E+02   nodes   363   350   349
+element#  1180   pressure  +5.00000E+02   nodes   350   362   351
+element#  1183   pressure  +5.00000E+02   nodes   354   358   355
+element#  1197   pressure  +5.00000E+02   nodes   324    39   323
+element#  1199   pressure  +5.00000E+02   nodes   118   336   357
+element#  1204   pressure  +5.00000E+02   nodes   333   373   334
+element#  1205   pressure  +5.00000E+02   nodes   333   334    49
+element#  1247   pressure  +5.00000E+02   nodes   334   374   335
+element#  1251   pressure  +5.00000E+02   nodes   322   323    38
+element#  1264   pressure  +5.00000E+02   nodes   369   330   329
+element#  1276   pressure  +5.00000E+02   nodes   369   368   344
+element#  1306   pressure  +5.00000E+02   nodes   365   364   348
+element#  1312   pressure  +5.00000E+02   nodes   336    52    51
+element#  1326   pressure  +5.00000E+02   nodes   348    91   347
+element#  1337   pressure  +5.00000E+02   nodes    81    80   337
+element#  1355   pressure  +5.00000E+02   nodes   346   366   347
+element#  1369   pressure  +5.00000E+02   nodes   319   320    35
+element#  1376   pressure  +5.00000E+02   nodes   109    99   355
+element#  1383   pressure  +5.00000E+02   nodes   345    88   344
+element#  1385   pressure  +5.00000E+02   nodes   339    83    82
+element#  1386   pressure  +5.00000E+02   nodes    90   346   347
+element#  1387   pressure  +5.00000E+02   nodes   354   359   358
+element#  1402   pressure  +5.00000E+02   nodes   359   320   319
+element#  1404   pressure  +5.00000E+02   nodes    45   330    46
+element#  1407   pressure  +5.00000E+02   nodes   367   366   346
+element#  1447   pressure  +5.00000E+02   nodes   366   365   347
+element#  1449   pressure  +5.00000E+02   nodes   347    91    90
+element#  1481   pressure  +5.00000E+02   nodes   370   371   331
+element#  1496   pressure  +5.00000E+02   nodes   372   332   371
+element#  1501   pressure  +5.00000E+02   nodes    85   341   342
+element#  1545   pressure  +5.00000E+02   nodes   370   331   330
+element#  1562   pressure  +5.00000E+02   nodes    47   332    48
+element#  1564   pressure  +5.00000E+02   nodes   326   325   365
+element#  1566   pressure  +5.00000E+02   nodes   354    98    97

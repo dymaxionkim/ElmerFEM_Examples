@@ -1,0 +1,66 @@
+                                                                                
+                                                                                
+              -- CODE_ASTER -- VERSION : EXPLOITATION (stable) --               
+                                                                                
+                     Version 12.6.0 modifiée le 16/06/2016                      
+                     révision 77d3379d51e8 - branche 'v12'                      
+                         Copyright EDF R&D 1991 - 2016                          
+                                                                                
+                    Exécution du : Thu Oct 13 00:11:13 2016                     
+                           Nom de la machine : UBUNTU                           
+                              Architecture : 64bit                              
+                          Type de processeur : x86_64                           
+      Système d'exploitation : Linux debian stretch/sid  4.4.0-42-generic       
+                        Langue des messages : ko (UTF-8)                        
+                                                                                
+                           Version de Python : 2.7.10                           
+                            Version de NumPy : 1.9.2                            
+                           Parallélisme MPI : inactif                           
+                          Parallélisme OpenMP : actif                           
+                        Nombre de processus utilisés : 1                        
+                     Version de la librairie HDF5 : 1.8.14                      
+                      Version de la librairie MED : 3.2.0                       
+                     Version de la librairie MFront : 2.0.2                     
+                     Version de la librairie MUMPS : 4.10.0                     
+                        Librairie PETSc : non disponible                        
+                    Version de la librairie SCOTCH : 5.1.10                     
+                  Mémoire limite pour l'exécution : 862.00 Mo                   
+                   consommée par l'initialisation : 377.39 Mo                   
+                  par les objets du jeu de commandes : 3.39 Mo                  
+                 reste pour l'allocation dynamique : 481.21 Mo                  
+                Taille limite des fichiers d'échange : 12.00 Go                 
+                                                                                
+ <I> <FIN> FERMETURE DE LA BASE "GLOBALE" EFFECTUEE.
+
+ <FIN> Arrêt normal dans "FIN".
+ <I> <FIN> ARRET NORMAL DANS "FIN" PAR APPEL A "JEFINI".
+  
+ <I> <FIN> MEMOIRE JEVEUX MINIMALE REQUISE POUR L'EXECUTION :                      33.47 Mo
+ <I> <FIN> MEMOIRE JEVEUX OPTIMALE REQUISE POUR L'EXECUTION :                      58.58 Mo
+ <I> <FIN> MAXIMUM DE MEMOIRE UTILISEE PAR LE PROCESSUS LORS DE L'EXECUTION :     447.69 Mo
+
+ ********************************************************************************
+ * COMMAND                  :       USER :     SYSTEM :   USER+SYS :    ELAPSED *
+ ********************************************************************************
+ * init (jdc)               :       0.30 :       0.05 :       0.35 :       0.67 *
+ *  . compile               :       0.00 :       0.00 :       0.00 :       0.00 *
+ *  . exec_compile          :       0.07 :       0.01 :       0.08 :       0.23 *
+ *  . report                :       0.00 :       0.00 :       0.00 :       0.01 *
+ *  . build                 :       0.00 :       0.00 :       0.00 :       0.00 *
+ * DEBUT                    :       0.03 :       0.02 :       0.05 :       0.47 *
+ * DEFI_MATERIAU            :       0.01 :       0.00 :       0.01 :       0.08 *
+ * LIRE_MAILLAGE            :       0.05 :       0.00 :       0.05 :       0.17 *
+ * MODI_MAILLAGE            :       0.02 :       0.01 :       0.03 :       0.11 *
+ * AFFE_MODELE              :       0.03 :       0.01 :       0.04 :       0.31 *
+ * AFFE_MATERIAU            :       0.01 :       0.00 :       0.01 :       0.02 *
+ * AFFE_CHAR_MECA           :       0.02 :       0.00 :       0.02 :       0.06 *
+ * MECA_STATIQUE            :       0.34 :       0.03 :       0.37 :       0.81 *
+ * CALC_CHAMP               :       0.06 :       0.01 :       0.07 :       0.07 *
+ * IMPR_RESU                :       0.02 :       0.00 :       0.02 :       0.06 *
+ * FIN                      :       0.01 :       0.03 :       0.04 :       0.04 *
+ *  . part Superviseur      :       0.38 :       0.07 :       0.45 :       1.28 *
+ *  . part Fortran          :       0.55 :       0.09 :       0.64 :       1.67 *
+ ********************************************************************************
+ * TOTAL_JOB                :       0.93 :       0.16 :       1.09 :       2.96 *
+ ********************************************************************************
+

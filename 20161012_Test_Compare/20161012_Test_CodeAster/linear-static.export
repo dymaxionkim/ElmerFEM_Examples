@@ -1,0 +1,30 @@
+P uclient dong
+P mclient UBUNTU
+P follow_output yes
+P display UBUNTU:0
+P actions make_etude
+P version stable
+P nomjob linear-static
+P debug nodebug
+P mode interactif
+P ncpus 1
+P memjob 524288.0
+A memjeveux 64.0
+P tpsjob 10
+A tpmax 600
+P username dong
+P serveur localhost
+P aster_root /home/dong/salome_meca/V2016/tools/Code_aster_frontend-20160
+P protocol_exec asrun.plugins.server.SSHServer
+P protocol_copyto asrun.plugins.server.SCPServer
+P protocol_copyfrom asrun.plugins.server.SCPServer
+P proxy_dir /tmp
+P consbtc oui
+P soumbtc oui
+P origine salomemeca_asrun 1.10.0
+F comm /home/dong/Analysis/20161012_Test_CodeAster/Study1.comm D 1
+F mmed /home/dong/Analysis/20161012_Test_CodeAster/linear-static.mmed D 20
+F mess /home/dong/Analysis/20161012_Test_CodeAster/linear-static.mess R 6
+F resu /home/dong/Analysis/20161012_Test_CodeAster/linear-static.resu R 8
+F rmed /home/dong/Analysis/20161012_Test_CodeAster/linear-static.rmed R 80
+R base /home/dong/Analysis/20161012_Test_CodeAster/linear-static.base RC 0
