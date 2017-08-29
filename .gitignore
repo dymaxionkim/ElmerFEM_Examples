@@ -1,0 +1,12 @@
+*.unv
+*.log
+*.vtu
+*.pvsm
+*.pvtu
+*.ogv
+*.avi
+*.jpg
+*.jpeg
+*.png
+netgen.prof
+OSP/
