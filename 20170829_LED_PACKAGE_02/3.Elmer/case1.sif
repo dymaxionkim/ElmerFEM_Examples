@@ -1,0 +1,267 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory "Result"
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Steady state
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Solver Input File = case1.sif
+  Post File = case1.ep
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.67e-08
+  Permittivity of Vacuum = 8.8542e-12
+  Boltzmann Constant = 1.3807e-23
+  Unit Charge = 1.602e-19
+$POWER=1.0*0.7*3 !W, Heating Power of HeatSource
+$SIZE=0.0005*0.0005*0.0002*3 !m^3, Volume of HeatSource
+$TEMP=25 !C, Ambient Temperature
+$HS=100 !W/m^2K, Heat Transfer Coefficient
+End
+
+Body 1
+  Target Bodies(1) = 44
+  Name = "Body 1"
+  Equation = 1
+  Material = 3
+End
+
+Body 2
+  Target Bodies(1) = 45
+  Name = "Body 2"
+  Equation = 1
+  Material = 3
+  Body Force = 1
+End
+
+Body 3
+  Target Bodies(1) = 46
+  Name = "Body Property 3"
+  Equation = 1
+  Material = 2
+End
+
+Body 4
+  Target Bodies(1) = 47
+  Name = "Body Property 4"
+  Equation = 1
+  Material = 1
+End
+
+Body 5
+  Target Bodies(1) = 48
+  Name = "Body Property 5"
+  Equation = 1
+  Material = 6
+End
+
+Body 6
+  Target Bodies(1) = 49
+  Name = "Body Property 6"
+  Equation = 1
+  Material = 5
+End
+
+Body 7
+  Target Bodies(1) = 50
+  Name = "Body Property 7"
+  Equation = 1
+  Material = 1
+End
+
+Solver 2
+  Equation = Heat Equation
+  Calculate Loads = True
+  Variable = Temperature
+  Procedure = "HeatSolve" "HeatSolver"
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Direct
+  Linear System Direct Method = Banded
+End
+
+Solver 1
+  Equation = Result Output
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Binary Output = False
+  Output Format = Vtu
+  Single Precision = True
+  Output File Name = case1
+  Exec Solver = After Simulation
+End
+
+Equation 1
+  Name = "Equation 1"
+  Active Solvers(2) = 2 1
+End
+
+Material 1
+  Name = "Copper (generic)"
+  Electric Conductivity = 59.59e6
+  Relative Permeability = 0.999994
+  Youngs modulus = 115.0e9
+  Heat Conductivity = 401.0
+  Electric Conductivity = 59.59e6
+  Electric Conductivity = 59.59e6
+  Poisson ratio = 0.34
+  Youngs modulus = 115.0e9
+  Heat Capacity = 385.0
+  Youngs modulus = 115.0e9
+  Relative Permeability = 0.999994
+  Sound speed = 3810.0
+  Poisson ratio = 0.34
+  Heat expansion Coefficient = 16.5e-6
+  Poisson ratio = 0.34
+  Porosity Model = Always saturated
+  Mesh Poisson ratio = 0.34
+  Electric Conductivity = 59.59e6
+  Density = 8960.0
+  Relative Permeability = 0.999994
+End
+
+Material 2
+  Name = "Aluminium (generic)"
+  Electric Conductivity = 37.73e6
+  Relative Permeability = 1.000022
+  Youngs modulus = 70.0e9
+  Heat Conductivity = 237.0
+  Electric Conductivity = 37.73e6
+  Electric Conductivity = 37.73e6
+  Poisson ratio = 0.35
+  Youngs modulus = 70.0e9
+  Heat Capacity = 897.0
+  Youngs modulus = 70.0e9
+  Relative Permeability = 1.000022
+  Sound speed = 5000.0
+  Poisson ratio = 0.35
+  Heat expansion Coefficient = 23.1e-6
+  Poisson ratio = 0.35
+  Porosity Model = Always saturated
+  Mesh Poisson ratio = 0.35
+  Electric Conductivity = 37.73e6
+  Density = 2700.0
+  Relative Permeability = 1.000022
+End
+
+Material 3
+  Name = "Silicon (solid)"
+  Electric Conductivity = 1.0e-3
+  Youngs modulus = 185.0e9
+  Heat Conductivity = Variable Temperature; Real; 0 156; 300 156; 550 72; 800 43; 1050 29; 1300 25; 1550 23; 1800 21; 3000 21; End
+  Electric Conductivity = 1.0e-3
+  Electric Conductivity = 1.0e-3
+  Poisson ratio = 0.28
+  Youngs modulus = 185.0e9
+  Emissivity = 0.7
+  Heat Capacity = 555.8
+  Youngs modulus = 185.0e9
+  Sound speed = 8433.0
+  Poisson ratio = 0.28
+  Heat expansion Coefficient = 4.68e-6
+  Poisson ratio = 0.28
+  Porosity Model = Always saturated
+  Mesh Poisson ratio = 0.28
+  Electric Conductivity = 1.0e-3
+  Density = 2330.0
+End
+
+Material 4
+  Name = "Polycarbonate (generic)"
+  Youngs modulus = 2.2e9
+  Heat Conductivity = 0.205
+  Poisson ratio = 0.37
+  Youngs modulus = 2.2e9
+  Heat Capacity = 1250.0
+  Youngs modulus = 2.2e9
+  Poisson ratio = 0.37
+  Heat expansion Coefficient = 67.0e-6
+  Poisson ratio = 0.37
+  Porosity Model = Always saturated
+  Mesh Poisson ratio = 0.37
+  Density = 1220.0
+End
+
+Material 5
+  Name = "EMC (Epoxy Molding Compound)"
+  Youngs modulus = 1.193068E+09
+  Heat Conductivity = 3
+  Poisson ratio = 0.3
+  Youngs modulus = 1.193068E+09
+  Heat Capacity = 1250.0
+  Youngs modulus = 1.193068E+09
+  Poisson ratio = 0.3
+  Heat expansion Coefficient = 23.0e-6
+  Poisson ratio = 0.3
+  Porosity Model = Always saturated
+  Mesh Poisson ratio = 0.3
+  Density = 1850.0
+End
+
+Material 6
+  Name = "Epoxy"
+  Youngs modulus = 356900.67
+  Heat Conductivity = 0.35
+  Poisson ratio = 0.33
+  Youngs modulus = 356900.67
+  Heat Capacity = 1000.0
+  Youngs modulus = 356900.67
+  Poisson ratio = 0.33
+  Heat expansion Coefficient = 65.0e-6
+  Poisson ratio = 0.33
+  Porosity Model = Always saturated
+  Mesh Poisson ratio = 0.33
+  Density = 1540.0
+End
+
+Body Force 1
+  Name = "HeatSource"
+  Heat Source = $(POWER/(SIZE*2330)) !W/kg
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 26 
+  Name = "PCB_BOT"
+  Heat Transfer Coefficient = $HS
+  External Temperature = $TEMP
+End
+
+Boundary Condition 2
+  Target Boundaries(2) = 27 29 
+  Name = "PCB_WALL"
+  Heat Transfer Coefficient = 6
+  External Temperature = $TEMP
+End
+
+Boundary Condition 3
+  Target Boundaries(2) = 31 34 
+  Name = "PCB_TOP"
+  Heat Transfer Coefficient = 6
+  External Temperature = $TEMP
+End
+
+Boundary Condition 4
+  Target Boundaries(2) = 41 43 
+  Name = "MC_TOP"
+  Heat Transfer Coefficient = 6
+  External Temperature = $TEMP
+End

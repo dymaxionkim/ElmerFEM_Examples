@@ -313,4 +313,14 @@
     <parameter name="Heat conductivity" >0.35</parameter>
   </material>
 
+  <material name="FR4" >
+    <parameter name="Density" >1850.0</parameter>
+    <parameter name="Youngs modulus" >3500000</parameter>
+    <parameter name="Poisson ratio" >0.136</parameter>
+    <parameter name="Tensile strength" >7.5e7</parameter>
+    <parameter name="Heat expansion coeff." >7e-5</parameter>
+    <parameter name="Heat capacity" >1300.0</parameter>
+    <parameter name="Heat conductivity" >0.35</parameter>
+  </material>
+
 </materiallibrary>
