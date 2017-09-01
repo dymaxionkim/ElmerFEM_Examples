@@ -1,0 +1,287 @@
+! Air, k-e Turbulence
+! V=1 m/s
+! Ref : http://www.elmerfem.org/forum/viewtopic.php?f=3&t=4300
+
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory "case5"
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Transient
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Timestep intervals = 200
+  Timestep Sizes = 0.05
+  Solver Input File = case5.sif
+  Post File = case5.ep
+End
+
+Constants
+  Gravity(4) = 0 0 -1 9.82 !z-axis
+  Stefan Boltzmann = 5.67e-08
+  Permittivity of Vacuum = 8.8542e-12
+  Boltzmann Constant = 1.3807e-23
+  Unit Charge = 1.602e-19
+$INLET=1.0 !m/s
+$TEMP=25 !C
+$HeatSource=10/(0.01*0.01) !W/m^2
+$BoundaryLayer = 0.008 !m
+End
+
+Body 1
+  Target Bodies(1) = 13
+  Name = "Body Property 1"
+  Equation = 2
+  Material = 3
+  Initial condition = 2
+End
+
+Body 2
+  Target Bodies(1) = 14
+  Name = "Body Property 2"
+  Equation = 1
+  Material = 2
+  Body Force = 1
+  Initial condition = 1
+End
+
+Solver 4
+  Equation = Heat Equation
+  Variable = Temperature
+  Procedure = "HeatSolve" "HeatSolver"
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Direct
+  Linear System Direct Method = Banded
+End
+
+Solver 2
+  Equation = Navier-Stokes
+  Procedure = "FlowSolve" "FlowSolver"
+  Variable = Flow Solution[Velocity:3 Pressure:1]
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1.0e-5
+  BiCGstabl polynomial degree = 2
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = False
+  Linear System Residual Output = 1
+  Linear System Precondition Recompute = 1
+End
+
+Solver 3
+  Equation = K-Epsilon
+  Procedure = "KESolver" "KESolver"
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1.0e-4
+  BiCGstabl polynomial degree = 2
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = False
+  Linear System Residual Output = 1
+  Linear System Precondition Recompute = 1
+End
+
+Solver 1
+  Equation = Result Output
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Binary Output = False
+  Output Format = Vtu
+  Single Precision = True
+  Output File Name = case
+  Exec Solver = After Timestep
+End
+
+Equation 1
+  Name = "Air"
+  Active Solvers(4) = 4 2 3 1
+End
+
+Equation 2
+  Name = "HeatSink"
+  Active Solvers(2) = 4 1
+End
+
+Material 1
+  Name = "Air (room temperature)"
+  Relative Permeability = 1.00000037
+  Heat Conductivity = 0.0257
+  KE Clip = 0.000006
+  Heat Capacity = 1005.0
+  Relative Permittivity = 1.00059
+  Relative Permeability = 1.00000037
+  Viscosity = 1.983e-5
+  Viscosity = 1.983e-5
+  Sound speed = 343.0
+  Heat expansion Coefficient = 3.43e-3
+  Relative Permittivity = 1.00059
+  Porosity Model = Always saturated
+  Relative Permittivity = 1.00059
+  Relative Permittivity = 1.00059
+  Reference Temperature = $TEMP
+  Density = 1.205
+  Relative Permeability = 1.00000037
+  KE Cmu = 0.09
+  Viscosity Model = K-Epsilon !추가
+End
+
+Material 2
+  Name = "Water (room temperature)"
+  Relative Permeability = 0.999992
+  Heat Conductivity = 0.58
+  Heat Capacity = 4183.0
+  Relative Permittivity = 80.1
+  Relative Permeability = 0.999992
+  Viscosity = 1.002e-3
+  Viscosity = 1.002e-3
+  Sound speed = 1497.0
+  Heat expansion Coefficient = 0.207e-3
+  Relative Permittivity = 80.1
+  Porosity Model = Always saturated
+  Relative Permittivity = 80.1
+  Relative Permittivity = 80.1
+  Reference Temperature = $TEMP
+  Density = 998.3
+  Relative Permeability = 0.999992
+End
+
+Material 3
+  Name = "Aluminium (generic)"
+  Electric Conductivity = 37.73e6
+  Relative Permeability = 1.000022
+  Youngs modulus = 70.0e9
+  Heat Conductivity = 237.0
+  Electric Conductivity = 37.73e6
+  Electric Conductivity = 37.73e6
+  Poisson ratio = 0.35
+  Youngs modulus = 70.0e9
+  Heat Capacity = 897.0
+  Youngs modulus = 70.0e9
+  Relative Permeability = 1.000022
+  Sound speed = 5000.0
+  Poisson ratio = 0.35
+  Heat expansion Coefficient = 23.1e-6
+  Poisson ratio = 0.35
+  Porosity Model = Always saturated
+  Reference Temperature = $TEMP
+  Mesh Poisson ratio = 0.35
+  Electric Conductivity = 37.73e6
+  Density = 2700.0
+  Relative Permeability = 1.000022
+End
+
+Body Force 1
+  Name = "Buoyancy"
+  Boussinesq = True
+End
+
+Initial Condition 1
+  Name = "Air_InitialCondition"
+  Velocity 3 = 0
+  Velocity 2 = 0
+  Kinetic Energy = 0.003
+  Velocity 1 = 0
+  Kinetic Dissipation = 0.0001
+  Temperature = $TEMP
+End
+
+Initial Condition 2
+  Name = "HeatSink_InitialCondition"
+  Temperature = $TEMP
+End
+
+Boundary Condition 1
+  Target Boundaries(2) = 19 20 
+  Name = "Air_WALL"
+  Heat Transfer Coefficient = 250
+  Wall Law = True
+  Boundary Layer Thickness = $BoundaryLayer
+  External Temperature = $TEMP
+  Noslip wall BC = True
+End
+
+Boundary Condition 2
+  Target Boundaries(1) = 17 
+  Name = "Air_INLET"
+  Kinetic Dissipation = 0.001
+  Heat Transfer Coefficient = 250
+  Kinetic Energy = 0.003
+  Velocity 2 = $INLET
+  External Temperature = $TEMP
+End
+
+Boundary Condition 3
+  Target Boundaries(1) = 18 
+  Name = "Air_OUTLET"
+  Heat Transfer Coefficient = 250
+  External Pressure = 0
+  External Temperature = $TEMP
+End
+
+Boundary Condition 4
+  Target Boundaries(1) = 15 
+  Name = "HeatSource"
+  Heat Transfer Coefficient = 250
+  External Temperature = $TEMP
+  Heat Flux = $HeatSource
+End
+
+Boundary Condition 5
+  Target Boundaries(1) = 21 
+  Name = "HeatSink_BOT"
+  Heat Transfer Coefficient = 250
+  External Temperature = $TEMP
+End
+
+Boundary Condition 6
+  Target Boundaries(1) = 16 
+  Name = "HeatSink_TOP"
+  Heat Transfer Coefficient = 250
+  Wall Law = True
+  Boundary Layer Thickness = $BoundaryLayer
+  External Temperature = $TEMP
+  Noslip wall BC = True
+End
