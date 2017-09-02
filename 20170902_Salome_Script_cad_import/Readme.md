@@ -1,7 +1,7 @@
 
-###################################################
 # Modified salome multibody CAD import for elmer
-###################################################
+
+_Import, Grouping and Meshing for Multi STEP Files_
 
 
 ## Install
