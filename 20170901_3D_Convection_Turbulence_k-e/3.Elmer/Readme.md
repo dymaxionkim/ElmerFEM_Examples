@@ -1,4 +1,6 @@
 
+# Heat + Flow
+
 
 ## 유의사항
 * case 1건을 계산하는데는 최고 약 하루 정도 소요됨(Intel 6700K 4GHz CPU의 경우).
@@ -93,14 +95,60 @@ FlowSolve:  Relative Change :    2.0000000000000000
   - 그래도 안되면 최후의 수단으로 형상,유속 그리고 k-e 파라미터(운동에너지,소산계수) 같은 물성치를 조정해서 타협하거나, 난류모델을 다른 것(k-omega, LES등)으로 바꾼다.  k-e 난류모델 보다는 그나마 수렴성이 나은 편이기 때문이다.
 
 
-## case별 계산수행후 경향성
-* 본 테스트 예제의 경우, 대략 레이놀즈수 1500(유속 0.22[m/s] 가량)을 기준으로 그 이상일 경우에는 수렴 실패가 나타난다.
-* 그러나 TimeStep을 0.05s에서 0.01s로 줄여주니, 수렴 성공 여부를 가르는 기준 유속이 0.25[m/s] 이상으로 더 올라감을 확인할 수 있었다.
-* 층류유동일 경우보다, 난류모델을 적용해 주니 발열원의 온도가 좀 더 낮아진다.
-* 유속이 상승할 수록 냉각효과가 상승한다.
-* 유체를 물에서 공기로 바꾸니, 부력에 의한 상승기류가 훨씬 크게 나타난다.
-* 유체가 물일 경우가 공기의 경우보다 좀 더 나은 냉각성능을 보이지만, 공기의 유입 온도가 일정하게 잘 유지된다면 그 차이는 그렇게 크지는 않음을 알 수 있다.
+
+## case별 결과 가시화
+
+### case1 (Steady State)
+
+* 온도분포
+
+![](https://user-images.githubusercontent.com/12775748/29994094-99dcdfce-9002-11e7-96ea-b4e200d14e67.png)
+
+* 유선 형성
+
+![](https://user-images.githubusercontent.com/12775748/29994097-9a09c23c-9002-11e7-966b-b2f2e00e5eb5.png)
 
 
+## 조건변경에 따른 차이점 확인
+* 동영상 순서
+  - [case2] Water, 0.01m/s, Larminar (TimeStep 0.05s)
+  - [case3] Air, 0.01m/s, Larminar
+  - [case6] Air, 0.0m/s, Turbulent (Natural Convection)
+  - [case4] Air, 0.01m/s, Turbulent
+  - [case7] Air, 0.1m/s, Turbulent
+  - [case10] Air, 0.2m/s, Turbulent
+  - [case11] Air, 0.25m/s, Turbulent (TimeStep 0.01s)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/dJqXcKv9ZqE" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/bjh0zsZVGUM" frameborder="0" allowfullscreen></iframe>
+
+* case10의 부분 확대 (유속)
+
+![](https://user-images.githubusercontent.com/12775748/29994099-a86f2056-9002-11e7-86b1-b5cb08e7a007.png)
+
+
+* 발열원 온도 비교 (10초후)
+
+|case  |T_J    |Remark|
+|:----:|------:|:-----|
+|case2 |28.51  |Water, 0.01m/s, Larminar|
+|case3 |28.89  |Air, 0.01m/s, Larminar|
+|case6 |28.51  |Air, 0.0m/s, Turbulent|
+|case4 |28.51  |Air, 0.01m/s, Turbulent|
+|case7 |28.51  |Air, 0.1m/s, Turbulent|
+|case10|28.51  |Air, 0.2m/s, Turbulent|
+
+
+* 위 결과를 통해, 다음과 같은 경향성을 확인할 수 있다.
+  - 발열량이 10W 정도로 낮은 편이고, 유체의 온도가 거의 변화가 없기 때문에 조건에 따른 온도 변화는 거의 없다.
+  - 유체가 Water일 경우에도 마찬가지다.
+  - 다만, 층류유동일 때 보다 난류유동일 때 약간의 온도 저하를 볼 수 있다.
+  - 유체의 온도 변화가 거의 없으므로, 유체의 속도가 증가한다고 해서 온도가 특별히 더 낮아지는 것이 보이지는 않는다.  시뮬레이션 조건을 좀 더 다듬어야 할 것 같다.  접액면의 온도전달 조건에 잘못된 부분이 없는지 나중에 확인해 보기로 한다(추측컨데, 조건별로 Heat Transfer Coefficient를 다르게 주어야 할 것 같다는 생각이 든다).
+  - 유체를 물에서 공기로 바꾸니, 부력에 의한 상승기류가 훨씬 크게 나타난다.
+  - 대략 레이놀즈수 1500(유속 0.22[m/s] 가량)을 기준으로 그 이상일 경우에는 수렴 실패가 나타난다.
+  - 그러나 TimeStep을 0.05s에서 0.01s로 줄여주니, 수렴 성공 여부를 가르는 기준 유속이 0.25[m/s] 이상으로 더 올라감을 확인할 수 있었다.
+
+ 
 
 
