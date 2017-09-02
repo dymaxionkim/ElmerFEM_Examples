@@ -3,9 +3,8 @@
 
 _Import, Grouping and Meshing for Multi STEP Files_
 
-_Original coding by Rainer Ochs_
-
-_Modified by DymaxionKim_
+* Original coding by Rainer Ochs
+* Modified by DymaxionKim
 
 
 
