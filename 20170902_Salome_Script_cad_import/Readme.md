@@ -93,7 +93,7 @@ Finished!
 
 
 * Check Body groups. (Body 1, Body 2, ...)
-* Devide Surface groups in ElmerGUI. (in ElmerGUI Menu, `Mesh - Divide surface..`)
+* Divide Surface groups in ElmerGUI. (in ElmerGUI Menu, `Mesh - Divide surface..`)
 
 
 _Thank you!_
