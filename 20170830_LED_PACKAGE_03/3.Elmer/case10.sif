@@ -14,8 +14,8 @@ Simulation
   Output Intervals = 1
   Timestepping Method = BDF
   BDF Order = 1
-  Solver Input File = case1.sif
-  Post File = case1.ep
+  Solver Input File = case10.sif
+  Post File = case10.ep
 End
 
 Constants
@@ -24,13 +24,14 @@ Constants
   Permittivity of Vacuum = 8.8542e-12
   Boltzmann Constant = 1.3807e-23
   Unit Charge = 1.602e-19
-$POWER=1.0*0.7*3 !W, Heating Power of HeatSource
-$SIZE=0.0005*0.0005*0.0002*3 !m^3, Volume of HeatSource
-$TEMP=25 !C, Ambient Temperature
-$HS=250 !W/m^2K, Heat Transfer Coefficient
-$PACK=250 !W/m^2K, Heat Transfer Coefficient
+  $POWER=1.0*0.7*3 !W, Heating Power of HeatSource
+  $SIZE=0.0005*0.0005*0.0002*3 !m^3, Volume of HeatSource
+  $TEMP=25 !C, Ambient Temperature
+  $HTC_PCB=800 !W/m^2K, Heat Transfer Coefficient
+  $HTC_PACK=80 !W/m^2K, Heat Transfer Coefficient
 End
 
+!PATTERN
 Body 1
   Target Bodies(1) = 34
   Name = "Body Property 1"
@@ -38,13 +39,15 @@ Body 1
   Material = 2
 End
 
+!LEAD
 Body 2
   Target Bodies(1) = 35
   Name = "Body Property 2"
   Equation = 1
-  Material = 1
+  Material = 2
 End
 
+!MC
 Body 3
   Target Bodies(1) = 36
   Name = "Body Property 3"
@@ -52,6 +55,7 @@ Body 3
   Material = 3
 End
 
+!WIN
 Body 4
   Target Bodies(1) = 37
   Name = "Body Property 4"
@@ -59,6 +63,7 @@ Body 4
   Material = 4
 End
 
+!SLUG
 Body 5
   Target Bodies(1) = 38
   Name = "Body Property 5"
@@ -66,6 +71,7 @@ Body 5
   Material = 2
 End
 
+!SOURCE
 Body 6
   Target Bodies(1) = 39
   Name = "Body Property 6"
@@ -74,6 +80,7 @@ Body 6
   Body Force = 1
 End
 
+!PCB
 Body 7
   Target Bodies(1) = 33
   Name = "Body Property 7"
@@ -106,7 +113,7 @@ Solver 1
   Binary Output = False
   Output Format = Vtu
   Single Precision = True
-  Output File Name = case1
+  Output File Name = case9
   Exec Solver = After Simulation
 End
 
@@ -241,13 +248,13 @@ End
 Boundary Condition 1
   Target Boundaries(6) = 40 41 42 43 44 45 
   Name = "HS"
-  Heat Transfer Coefficient = $HS
+  Heat Transfer Coefficient = $HTC_PCB
   External Temperature = $TEMP
 End
 
 Boundary Condition 2
   Target Boundaries(2) = 46 47 
   Name = "PACKAGE"
-  Heat Transfer Coefficient = $PACK
+  Heat Transfer Coefficient = $HTC_PACK
   External Temperature = $TEMP
 End
