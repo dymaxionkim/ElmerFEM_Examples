@@ -6,7 +6,11 @@ _Import, Grouping and Meshing for Multi STEP Files_
 * Original coding by Rainer Ochs
 * Modified by DymaxionKim
 
-
+## Seguence
+* Import multi STEP files
+* Group by solids
+* Make Mesh
+* Export `Mesh.unv`
 
 ## PreRequisite
 * Linux OS (maybe possible in Windows OS)
