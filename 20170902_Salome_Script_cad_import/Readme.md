@@ -4,6 +4,12 @@
 _Import, Grouping and Meshing for Multi STEP Files_
 
 
+## PreRequisite
+* Linux OS
+* ElmerGUI
+* Salome Platform
+
+
 ## Install
 
 * Download and Path
