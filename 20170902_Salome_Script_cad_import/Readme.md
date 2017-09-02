@@ -13,6 +13,7 @@ mkdir ~/.config/salome/cad_import
 wget -O ~/.config/salome/cad_import/cad_import.sh https://raw.githubusercontent.com/dymaxionkim/ElmerFEM_Examples/master/20170902_Salome_Script_cad_import/cad_import.sh
 wget -O ~/.config/salome/cad_import/cad_import.py https://raw.githubusercontent.com/dymaxionkim/ElmerFEM_Examples/master/20170902_Salome_Script_cad_import/cad_import.py
 wget -O ~/.config/salome/cad_import/Readme.md https://raw.githubusercontent.com/dymaxionkim/ElmerFEM_Examples/master/20170902_Salome_Script_cad_import/Readme.md
+chmod +x ~/.config/salome/cad_import/cad_import.sh
 echo "" >> ~/.bashrc
 echo "# Modified salome multibody CAD import for elmer" >> ~/.bashrc
 echo "export PATH=\"/home/MYHOME/.config/salome/cad_import:\$PATH\"" >> ~/.bashrc
