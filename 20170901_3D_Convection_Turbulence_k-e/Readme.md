@@ -119,9 +119,8 @@ FlowSolve:  Relative Change :    2.0000000000000000
   - [case10] Air, 0.2m/s, Turbulent
   - [case11] Air, 0.25m/s, Turbulent (TimeStep 0.01s)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/dJqXcKv9ZqE" frameborder="0" allowfullscreen></iframe>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/bjh0zsZVGUM" frameborder="0" allowfullscreen></iframe>
+* https://www.youtube.com/embed/dJqXcKv9ZqE
+* https://www.youtube.com/embed/bjh0zsZVGUM
 
 * case10의 부분 확대 (유속)
 
