@@ -140,15 +140,11 @@ for aGroup in range(0,len(p1_solids)):
 ## GROUP (FACE)
 # Ref : http://docs.salome-platform.org/latest/gui/GEOM/tui_working_with_groups_page.html
 #################################################
-# Get ID (face)
+## Reference
+#Group_5 = Mesh_1.GetMesh().IntersectListOfGroups( [ Group_4, Group_3 ], 'Group_5' )
+#Group_6 = Mesh_1.GetMesh().CutListOfGroups( [ Group_4 ], [ Group_5 ], 'Group_6' )
+#Group_7 = Mesh_1.GetMesh().CutListOfGroups( [ Group_3 ], [ Group_5 ], 'Group_7' )
 
-
-# make groups (face)
-#gf = []
-#for aGroup in range(0,len(p1_solids)):
-#	gf.append(geompy.CreateGroup(p1, geompy.ShapeType["FACE"]))
-#for aGroup in range(0,len(p1_solids)):
-#	geompy.AddObject(gf[aGroup], id_p1_solids[aGroup])
 
 
 #################################################
