@@ -43,21 +43,22 @@ import os
 #gg = salome.ImportComponentGUI("GEOM")
 
 parts = []
-
 error = 0
-
 tolerance = 0.00001	# max tolerance for identification of vertices
 
 
 #################################################
-## SECTION TO EDIT
+## WORKING DIRECTORY
 #################################################
-
-# Working directory
+print("\n" * 100)
 path = raw_input("Input your working directory path : ")
 print("#################################################")
 print("Working directory path : ", path)
 
+
+#################################################
+## READ STEP files
+#################################################
 # PartName
 def search_STEP(dirname):
 	filenames = os.listdir(dirname)
@@ -69,24 +70,25 @@ def search_STEP(dirname):
 	return ext2
 
 ListSTEP = search_STEP(path)
+print("\n" * 100)
 print("#################################################")
 print("List of STEP files...")
 print(ListSTEP)
 
-# add here the bodies. Each file shall only contain one body or one "solid"
-# Bodies that contain other bodies shall be at the end.
-# If this is respected the order of import represents the body index in the mesh
-
-# Read STEP files
 for ext in ListSTEP:
 	parts.append(geompy.ImportFile(path+"/"+ext,"STEP"))
 
-# Hypothesys for NETGEN
+
+#################################################
+## HYPOTHESIS to MESH
+#################################################
 MinMeshSize = 2.0   # specify in mm
 MaxMeshSize = 10.0   # specify in mm
 MeshSegPerEdge = 10
 MeshOptimize = 1	# 1 for optimize, 0 for no optimization
 MeshGrowthRate = 0.7
+
+print("\n" * 100)
 print("#################################################")
 print("Hypothesys for NETGEN")
 MinMeshSize = float(raw_input("MinMeshSize[mm] : "))
@@ -94,16 +96,16 @@ MaxMeshSize = float(raw_input("MaxMeshSize[mm] : "))
 MeshSegPerEdge = float(raw_input("MeshSegPerEdge[ea] : "))
 MeshGrowthRate = float(raw_input("MeshGrowthRate[0~1] : "))
 
-#################################################
-## END SECTION TO EDIT
-#################################################
 
-# make partition
+#################################################
+## PARTITION
+#################################################
 if (len(parts) < 2):
 	msg = "This script is made for multiple bodies. cannot continue"
 	print msg
 
 p1 = geompy.MakePartition(parts,[],[],[],geompy.ShapeType["SOLID"], 0, [], 0)
+
  # GetObjectIDs
 p1_solids = geompy.ExtractShapes(p1, geompy.ShapeType["SOLID"],False) #gets all solids in partition
 msg = "Solids read in: {0} - Solids in model: {1}\n".format(len(parts),len(p1_solids))
@@ -113,11 +115,16 @@ if (len(p1_solids) > len(parts)):
 	msg = "Wrong number of solids! Check for partly intersecting objects and for hollow objects"
 	print msg
 
+
+#################################################
+## GROUP (SOLID)
+#################################################
+# Get ID (solid)
 id_p1_solids = [] #initialize the array
 for aSolid in range(0,len(p1_solids)):
 	id_p1_solids.append(geompy.GetSubShapeID(p1, p1_solids[aSolid])) #get the ID of the solid and add it to the array
 
-# make groups
+# make groups (solid)
 g = []
 for aGroup in range(0,len(p1_solids)):
    g.append(geompy.CreateGroup(p1, geompy.ShapeType["SOLID"]))
@@ -129,23 +136,41 @@ id_p1 = geompy.addToStudy(p1,"Part1")
 for aGroup in range(0,len(p1_solids)):
 	geompy.addToStudyInFather(p1, g[aGroup], 'body{0}'.format(aGroup+1) )
 
-# display
+#################################################
+## GROUP (FACE)
+# Ref : http://docs.salome-platform.org/latest/gui/GEOM/tui_working_with_groups_page.html
+#################################################
+# Get ID (face)
+
+
+# make groups (face)
+#gf = []
+#for aGroup in range(0,len(p1_solids)):
+#	gf.append(geompy.CreateGroup(p1, geompy.ShapeType["FACE"]))
+#for aGroup in range(0,len(p1_solids)):
+#	geompy.AddObject(gf[aGroup], id_p1_solids[aGroup])
+
+
+#################################################
+## DISPLAY
+#################################################
 #gg.createAndDisplayGO(id_p1)
 #gg.setDisplayMode(id_p1,1)
 #gg.setColor(id_p1, 150, 150, 180)
 #gg.setTransparency(id_p1, 0.8)
 
 
-# -------------- meshing -----------------------------------------------
-
+#################################################
+## MESHING
+#################################################
 import smesh, SMESH, SALOMEDS
+print("\n" * 100)
 print "meshing..."
 # create a mesh
 tetraN = smesh.Mesh(p1, "Mesh_1")
 
 # create a Netgen_2D3D algorithm for solids
 algo3D = tetraN.Tetrahedron(smesh.FULL_NETGEN)
-
 
 # define hypotheses
 n23_params = algo3D.Parameters()
@@ -162,6 +187,7 @@ n23_params.SetOptimize(MeshOptimize)
 tetraN.Compute()
 smesh.SetName(tetraN.GetMesh(), 'Mesh_1')
 
+print("\n" * 100)
 print "creating mesh groups"
 # create mesh groups
 # Sequence defines body and face index in elmer.
@@ -171,8 +197,6 @@ for aGroup in range(0,len(p1_solids)):
 print "saving file..."
 MeshFileName = path+"/"+"Mesh.unv"
 tetraN.ExportUNV(MeshFileName, None )
-
-print("#################################################")
 
 def search_UNV(dirname):
 	filenames = os.listdir(dirname)
