@@ -27,7 +27,6 @@ import salome_notebook
 notebook = salome_notebook.NoteBook(theStudy)
 
 
-"""
 #################################################
 ## User Inputs
 #################################################
@@ -52,8 +51,9 @@ MaxMeshSize = float(raw_input("MaxMeshSize[mm] : "))
 MinMeshSize = float(raw_input("MinMeshSize[mm] : "))
 MeshSegPerEdge = float(raw_input("MeshSegPerEdge[ea] : "))
 MeshGrowthRate = float(raw_input("MeshGrowthRate[0~1] : "))
-"""
 
+
+"""
 ## temp
 DIRECTORY = "/home/osboxes/.config/salome/cad_import/test"
 FILENAME = "aaa.step"
@@ -62,7 +62,7 @@ MaxMeshSize = 10
 MinMeshSize = 2.0
 MeshSegPerEdge = 10
 MeshGrowthRate = 0.3
-
+"""
 
 #################################################
 ### GEOM component
@@ -124,10 +124,20 @@ for aGROUP in range(0,len(GROUP_PARTS)):
 # GROUP (INTERSECT FACES of PARTS)
 #################################################
 GROUP_INTERSECTS = []
+LIST_INTERSECT = []
+LIST_INTERSECT2 = []
 for fGROUP in range(0,len(GROUP_FACES)):
 	for fGROUP2 in range(fGROUP+1,len(GROUP_FACES)):
 		if fGROUP!=fGROUP2:
 			GROUP_INTERSECTS.append( geompy.IntersectListOfGroups([GROUP_FACES[fGROUP], GROUP_FACES[fGROUP2]]) )
+			LIST_INTERSECT.append(GROUP_FACES[fGROUP])
+			LIST_INTERSECT2.append(GROUP_FACES[fGROUP2])
+
+EMPTY_GROUP = []
+#for iGROUP in range(0,len(GROUP_INTERSECTS)):
+#	if !( geompy.GetSubShapeID(PARTITION, GROUP_INTERSECTS[0]) ):
+#		EMPTY_GROUP.append( iGROUP )		
+	
 
 # Add to Study
 for iGROUP in range(0,len(GROUP_INTERSECTS)):
@@ -137,7 +147,16 @@ for iGROUP in range(0,len(GROUP_INTERSECTS)):
 #################################################
 # GROUP (CUT FACES of PARTS)
 #################################################
-#Cut_1 = geompy.CutListOfGroups([Group_4], [Intersect_1])
+GROUP_CUTS = []
+for fGROUP in range(0,len(GROUP_FACES)):
+	for lGROUP in range(0,len(LIST_INTERSECT)):
+		GROUP_CUTS.append( geompy.CutListOfGroups([LIST_INTERSECT[fGROUP]], [GROUP_INTERSECTS[lGROUP]]) )
+	for lGROUP2 in range(0,len(LIST_INTERSECT2)):
+		GROUP_CUTS.append( geompy.CutListOfGroups([LIST_INTERSECT2[fGROUP]], [GROUP_INTERSECTS[lGROUP2]]) )
+
+# Add to Study
+for cGROUP in range(0,len(GROUP_CUTS)):
+	geompy.addToStudyInFather(PARTITION, GROUP_CUTS[cGROUP], 'CUT{0}'.format(cGROUP+1) )
 
 
 #################################################
