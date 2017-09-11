@@ -47,9 +47,10 @@ MeshSegPerEdge = 10
 MeshGrowthRate = 0.7
 
 print("Hypothesys for NETGEN")
-MaxMeshSize = float(raw_input("MaxMeshSize[mm] : "))
 MinMeshSize = float(raw_input("MinMeshSize[mm] : "))
+MaxMeshSize = float(raw_input("MaxMeshSize[mm] : "))
 MeshSegPerEdge = float(raw_input("MeshSegPerEdge[ea] : "))
+MeshSegPerRadius = float(raw_input("MeshSegPerRadius[ea] : "))
 MeshGrowthRate = float(raw_input("MeshGrowthRate[0~1] : "))
 
 
@@ -61,6 +62,7 @@ sys.path.insert( 0, DIRECTORY)
 MaxMeshSize = 10
 MinMeshSize = 2.0
 MeshSegPerEdge = 10
+MeshSegPerRadius = 2
 MeshGrowthRate = 0.3
 """
 
@@ -180,14 +182,14 @@ MeshGrowthRate = 0.7
 # Parameters
 NETGEN_2D3D = MESH.Tetrahedron(algo=smeshBuilder.NETGEN_1D2D3D)
 NETGEN_Parameters = NETGEN_2D3D.Parameters()
-NETGEN_Parameters.SetMaxSize( MaxMeshSize*0.001 )
 NETGEN_Parameters.SetMinSize( MinMeshSize*0.001 )
+NETGEN_Parameters.SetMaxSize( MaxMeshSize*0.001 )
 NETGEN_Parameters.SetSecondOrder( 1 )
 # SetFiness ::: 0=VeryCoarse, 1=Coarse, 2=Moderate, 3=Fine, 4=VeryFine, 5=Custom
 NETGEN_Parameters.SetFineness( 5 )
 NETGEN_Parameters.SetGrowthRate( MeshGrowthRate )
 NETGEN_Parameters.SetNbSegPerEdge( MeshSegPerEdge )
-NETGEN_Parameters.SetNbSegPerRadius( 2 )
+NETGEN_Parameters.SetNbSegPerRadius( MeshSegPerRadius )
 NETGEN_Parameters.SetUseSurfaceCurvature( 1 ) # 0 or 1
 NETGEN_Parameters.SetQuadAllowed( 0 )
 NETGEN_Parameters.SetOptimize( 1 )
