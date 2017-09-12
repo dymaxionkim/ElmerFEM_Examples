@@ -196,18 +196,18 @@ for fGROUP in range(0,len(MGROUP_FACES)):
 #################################################
 MGROUP_CUTS = []
 for fGROUP in range(0,len(MGROUP_FACES)):
+	aCriteria = []
+	aCriterion = smesh.GetCriterion(SMESH.FACE,SMESH.FT_BelongToMeshGroup,SMESH.FT_Undefined,MGROUP_FACES[fGROUP],SMESH.FT_Undefined,SMESH.FT_LogicalAND)
+	aCriteria.append(aCriterion)
 	for fGROUP2 in range(0,len(MGROUP_INTERSECTS)):
-		aCriteria = []
-		aCriterion = smesh.GetCriterion(SMESH.FACE,SMESH.FT_BelongToMeshGroup,SMESH.FT_Undefined,MGROUP_FACES[fGROUP],SMESH.FT_Undefined,SMESH.FT_LogicalAND)
-		aCriteria.append(aCriterion)
 		aCriterion = smesh.GetCriterion(SMESH.FACE,SMESH.FT_BelongToMeshGroup,SMESH.FT_Undefined,MGROUP_INTERSECTS[fGROUP2],SMESH.FT_LogicalNOT)
 		aCriteria.append(aCriterion)
-		aFilter = smesh.GetFilterFromCriteria(aCriteria)
-		aFilter.SetMesh(MESH.GetMesh())
-		info = []
-		info = smesh.GetMeshInfo(aFilter)
-		if info!=smesh.GetMeshInfo(MGROUP_FACES[fGROUP]) and info.values()[10]:
-			MGROUP_CUTS.append( MESH.GroupOnFilter( SMESH.FACE, 'CUT{0}'.format(fGROUP+1), aFilter ) )
+	aFilter = smesh.GetFilterFromCriteria(aCriteria)
+	aFilter.SetMesh(MESH.GetMesh())
+	info = []
+	info = smesh.GetMeshInfo(aFilter)
+	if info!=smesh.GetMeshInfo(MGROUP_FACES[fGROUP]) and info.values()[10]:
+		MGROUP_CUTS.append( MESH.GroupOnFilter( SMESH.FACE, 'CUT{0}'.format(fGROUP+1), aFilter ) )
 
 
 #################################################
