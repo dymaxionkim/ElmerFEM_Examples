@@ -42,17 +42,17 @@ FILENAME = raw_input("Input your STEP File Name : ")
 print("STEP File Name : ", FILENAME)
 
 # Mesh Parameters
-MaxMeshSize = 10.0   # specify in mm
-MinMeshSize = 2.0   # specify in mm
-MeshSegPerEdge = 10
-MeshGrowthRate = 0.7
-
 print("Hypothesys for NETGEN")
-MinMeshSize = float(raw_input("MinMeshSize[mm] : "))
-MaxMeshSize = float(raw_input("MaxMeshSize[mm] : "))
-MeshSegPerEdge = float(raw_input("MeshSegPerEdge[ea] : "))
-MeshSegPerRadius = float(raw_input("MeshSegPerRadius[ea] : "))
-MeshGrowthRate = float(raw_input("MeshGrowthRate[0~1] : "))
+MinMeshSize = float(raw_input("MinMeshSize[mm] : ")) # specify in mm
+MaxMeshSize = float(raw_input("MaxMeshSize[mm] : ")) # specify in mm
+#MeshSecondOrder = float(raw_input("SetSecondOrder[0,1] : "))
+MeshSecondOrder = 1
+# SetFiness ::: 0=VeryCoarse, 1=Coarse, 2=Moderate, 3=Fine, 4=VeryFine, 5=Custom
+MeshFineness = float(raw_input("SetFineness[0~5] : "))
+if MeshFineness==5:
+	MeshSegPerEdge = float(raw_input("  MeshSegPerEdge[ea] : "))
+	MeshSegPerRadius = float(raw_input("  MeshSegPerRadius[ea] : "))
+	MeshGrowthRate = float(raw_input("  MeshGrowthRate[0~1] : "))
 
 
 """
@@ -146,13 +146,15 @@ NETGEN_2D3D = MESH.Tetrahedron(algo=smeshBuilder.NETGEN_1D2D3D)
 NETGEN_Parameters = NETGEN_2D3D.Parameters()
 NETGEN_Parameters.SetMinSize( MinMeshSize*0.001 )
 NETGEN_Parameters.SetMaxSize( MaxMeshSize*0.001 )
-NETGEN_Parameters.SetSecondOrder( 1 )
+NETGEN_Parameters.SetSecondOrder( int(MeshSecondOrder) )
 # SetFiness ::: 0=VeryCoarse, 1=Coarse, 2=Moderate, 3=Fine, 4=VeryFine, 5=Custom
-NETGEN_Parameters.SetFineness( 5 )
-NETGEN_Parameters.SetGrowthRate( MeshGrowthRate )
-NETGEN_Parameters.SetNbSegPerEdge( MeshSegPerEdge )
-NETGEN_Parameters.SetNbSegPerRadius( MeshSegPerRadius )
-NETGEN_Parameters.SetUseSurfaceCurvature( 1 ) # 0 or 1
+if MeshFineness!=5:
+	NETGEN_Parameters.SetFineness( int(MeshFineness) )
+if MeshFineness==5:
+	NETGEN_Parameters.SetGrowthRate( MeshGrowthRate )
+	NETGEN_Parameters.SetNbSegPerEdge( MeshSegPerEdge )
+	NETGEN_Parameters.SetNbSegPerRadius( MeshSegPerRadius )
+	NETGEN_Parameters.SetUseSurfaceCurvature( 1 ) # 0 or 1
 NETGEN_Parameters.SetQuadAllowed( 0 )
 NETGEN_Parameters.SetOptimize( 1 )
 NETGEN_Parameters.SetFuseEdges( 1 )

@@ -70,3 +70,24 @@ Finished!
 * Open `.unv` in ElmerGUI.
 * Check Body groups.
 * Check Surface groups.
+
+
+## Example
+* 3D Multibodies Modeling with FreeCAD
+![20170912_001](https://user-images.githubusercontent.com/12775748/30309522-bfa2e43a-97c6-11e7-8cab-a8246999e3a2.png)
+
+* Run in terminal
+![20170912_002](https://user-images.githubusercontent.com/12775748/30309526-c3019e14-97c6-11e7-9536-bce2786d3b4f.png)
+
+* Input working directory and STEP file name
+![20170912_003](https://user-images.githubusercontent.com/12775748/30309528-c4fd4c68-97c6-11e7-8dc1-54e10368b571.png)
+
+* Input Netgen parameters
+![20170912_004](https://user-images.githubusercontent.com/12775748/30309530-c64e9be4-97c6-11e7-94f6-824e3d80033e.png)
+
+* Open UNV file in ElmerGUI
+![20170912_005](https://user-images.githubusercontent.com/12775748/30309534-c830b6c2-97c6-11e7-9e46-ddd6087e9d9e.png)
+
+* Check surface groups
+![20170912_006](https://user-images.githubusercontent.com/12775748/30309536-c98bb6ca-97c6-11e7-9c47-8c9b97fa0452.png)
+

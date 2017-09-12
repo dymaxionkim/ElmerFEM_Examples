@@ -6,6 +6,6 @@
 # by Dymaxion.kim@gmail.com
 ###########################################################
 
-salome -t ~/.config/salome/cad_import/step2unv.py
+salome -t ~/.config/salome/step2unv/step2unv.py
 
 exit 0
