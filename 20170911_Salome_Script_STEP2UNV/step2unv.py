@@ -3,9 +3,9 @@
 #################################################
 #
 #   STEP2UNV for Elmer with Salome
-#   V01
+#   V02
 #
-#   Data: 2017-09-11
+#   Data: 2017-09-12
 #   Modifier : DymaxionKim
 #
 #   - Salome 8.2
@@ -26,6 +26,7 @@ theStudy = salome.myStudy
 import salome_notebook
 notebook = salome_notebook.NoteBook(theStudy)
 
+tolerance = 0.000001	# max tolerance for identification of vertices
 
 #################################################
 ## User Inputs
@@ -57,13 +58,13 @@ MeshGrowthRate = float(raw_input("MeshGrowthRate[0~1] : "))
 """
 ## temp
 DIRECTORY = "/home/osboxes/.config/salome/cad_import/test"
-FILENAME = "aaa.step"
+FILENAME = "bbb.step"
 sys.path.insert( 0, DIRECTORY)
+MinMeshSize = 1
 MaxMeshSize = 10
-MinMeshSize = 2.0
-MeshSegPerEdge = 10
-MeshSegPerRadius = 2
-MeshGrowthRate = 0.3
+MeshSegPerEdge = 20
+MeshSegPerRadius = 20
+MeshGrowthRate = 0.5
 """
 
 #################################################
@@ -123,45 +124,6 @@ for aGROUP in range(0,len(GROUP_PARTS)):
 
 
 #################################################
-# GROUP (INTERSECT FACES of PARTS)
-#################################################
-GROUP_INTERSECTS = []
-LIST_INTERSECT = []
-LIST_INTERSECT2 = []
-for fGROUP in range(0,len(GROUP_FACES)):
-	for fGROUP2 in range(fGROUP+1,len(GROUP_FACES)):
-		if fGROUP!=fGROUP2:
-			GROUP_INTERSECTS.append( geompy.IntersectListOfGroups([GROUP_FACES[fGROUP], GROUP_FACES[fGROUP2]]) )
-			LIST_INTERSECT.append(GROUP_FACES[fGROUP])
-			LIST_INTERSECT2.append(GROUP_FACES[fGROUP2])
-
-EMPTY_GROUP = []
-#for iGROUP in range(0,len(GROUP_INTERSECTS)):
-#	if !( geompy.GetSubShapeID(PARTITION, GROUP_INTERSECTS[0]) ):
-#		EMPTY_GROUP.append( iGROUP )		
-	
-
-# Add to Study
-for iGROUP in range(0,len(GROUP_INTERSECTS)):
-	geompy.addToStudyInFather(PARTITION, GROUP_INTERSECTS[iGROUP], 'INTERSECT{0}'.format(iGROUP+1) )
-
-
-#################################################
-# GROUP (CUT FACES of PARTS)
-#################################################
-GROUP_CUTS = []
-for fGROUP in range(0,len(GROUP_FACES)):
-	for lGROUP in range(0,len(LIST_INTERSECT)):
-		GROUP_CUTS.append( geompy.CutListOfGroups([LIST_INTERSECT[fGROUP]], [GROUP_INTERSECTS[lGROUP]]) )
-	for lGROUP2 in range(0,len(LIST_INTERSECT2)):
-		GROUP_CUTS.append( geompy.CutListOfGroups([LIST_INTERSECT2[fGROUP]], [GROUP_INTERSECTS[lGROUP2]]) )
-
-# Add to Study
-for cGROUP in range(0,len(GROUP_CUTS)):
-	geompy.addToStudyInFather(PARTITION, GROUP_CUTS[cGROUP], 'CUT{0}'.format(cGROUP+1) )
-
-
-#################################################
 ### SMESH component
 #################################################
 import  SMESH, SALOMEDS
@@ -211,14 +173,48 @@ MGROUP_FACES = []
 for aGROUP in range(0,len(GROUP_PARTS)):
 	MGROUP_FACES.append( MESH.GroupOnGeom(GROUP_FACES[aGROUP], 'FACE{0}'.format(aGROUP+1), SMESH.FACE) )
 
-MGROUP_INTERSECTS = []
-for iGROUP in range(0,len(GROUP_INTERSECTS)):
-	MGROUP_INTERSECTS.append( MESH.GroupOnGeom(GROUP_INTERSECTS[iGROUP], 'INTERSECT{0}'.format(iGROUP+1), SMESH.FACE) )
 
 #################################################
 # Make MESH
 #################################################
 isDone = MESH.Compute()
+
+
+#################################################
+# GROUP (INTERSECT FACES of PARTS)
+#################################################
+MGROUP_INTERSECTS = []
+for fGROUP in range(0,len(MGROUP_FACES)):
+	for fGROUP2 in range(fGROUP+1,len(MGROUP_FACES)):
+		if fGROUP!=fGROUP2:
+			aCriteria = []
+			aCriterion = smesh.GetCriterion(SMESH.FACE,SMESH.FT_BelongToMeshGroup,SMESH.FT_Undefined,MGROUP_FACES[fGROUP],SMESH.FT_Undefined,SMESH.FT_LogicalAND)
+			aCriteria.append(aCriterion)
+			aCriterion = smesh.GetCriterion(SMESH.FACE,SMESH.FT_BelongToMeshGroup,SMESH.FT_Undefined,MGROUP_FACES[fGROUP2])
+			aCriteria.append(aCriterion)
+			aFilter = smesh.GetFilterFromCriteria(aCriteria)
+			aFilter.SetMesh(MESH.GetMesh())
+			info = []
+			info = smesh.GetMeshInfo(aFilter)
+			if info.values()[10]: # Dictionary Key : Entity_Quad_Triangle
+				MGROUP_INTERSECTS.append( MESH.GroupOnFilter( SMESH.FACE, 'INTERSECT{0}'.format(fGROUP+1), aFilter ) )
+
+
+#################################################
+# GROUP (CUT FACES of PARTS)
+#################################################
+MGROUP_CUTS = []
+for fGROUP in range(0,len(MGROUP_FACES)):
+	for fGROUP2 in range(0,len(MGROUP_INTERSECTS)):
+		aCriteria = []
+		aCriterion = smesh.GetCriterion(SMESH.FACE,SMESH.FT_BelongToMeshGroup,SMESH.FT_Undefined,MGROUP_FACES[fGROUP],SMESH.FT_Undefined,SMESH.FT_LogicalAND)
+		aCriteria.append(aCriterion)
+		aCriterion = smesh.GetCriterion(SMESH.FACE,SMESH.FT_BelongToMeshGroup,SMESH.FT_Undefined,MGROUP_INTERSECTS[fGROUP2],SMESH.FT_LogicalNOT)
+		aCriteria.append(aCriterion)
+		aFilter = smesh.GetFilterFromCriteria(aCriteria)
+		aFilter.SetMesh(MESH.GetMesh())
+		if smesh.GetMeshInfo(aFilter)!=smesh.GetMeshInfo(MGROUP_FACES[fGROUP]):
+			MGROUP_CUTS.append( MESH.GroupOnFilter( SMESH.FACE, 'CUT{0}'.format(fGROUP+1), aFilter ) )
 
 
 #################################################
@@ -229,6 +225,24 @@ try:
   MESH.ExportUNV( DIRECTORY+"/"+FILENAME_HEAD+".unv")
 except:
   print 'ExportUNV() failed. Invalid file name?'
+
+
+#################################################
+# MESH Info
+#################################################
+print "Information about mesh:" 
+print "Number of nodes       : ", MESH.NbNodes()
+print "Number of edges       : ", MESH.NbEdges()
+print "Number of faces       : ", MESH.NbFaces()
+print "          triangles   : ", MESH.NbTriangles()
+print "          quadrangles : ", MESH.NbQuadrangles()
+print "          polygons    : ", MESH.NbPolygons()
+print "Number of volumes     : ", MESH.NbVolumes()
+print "          tetrahedrons: ", MESH.NbTetras()
+print "          hexahedrons : ", MESH.NbHexas()
+print "          prisms      : ", MESH.NbPrisms()
+print "          pyramids    : ", MESH.NbPyramids()
+print "          polyhedrons : ", MESH.NbPolyhedrons() 
 
 
 #################################################

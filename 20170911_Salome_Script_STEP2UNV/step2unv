@@ -1,0 +1,11 @@
+#!/bin/bash
+###########################################################
+# STEP2UNV for Elmer with Salome
+# Import, Grouping and Meshing for a STEP File
+# 2017.09.12
+# by Dymaxion.kim@gmail.com
+###########################################################
+
+salome -t ~/.config/salome/cad_import/step2unv.py
+
+exit 0
