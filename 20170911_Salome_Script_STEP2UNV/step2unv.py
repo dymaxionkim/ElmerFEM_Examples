@@ -26,46 +26,37 @@ theStudy = salome.myStudy
 import salome_notebook
 notebook = salome_notebook.NoteBook(theStudy)
 
-tolerance = 0.000001	# max tolerance for identification of vertices
+#tolerance = 1e-10	# max tolerance for identification of vertices
 
 #################################################
 ## User Inputs
 #################################################
 # WORKING DIRECTORY
 #print("\n" * 100)
-DIRECTORY = raw_input("Input your working directory path : ")
-print("Working directory path : ", DIRECTORY)
+print("----------------------------------------------------")
+print("Input your working directory :")
+DIRECTORY = raw_input()
 sys.path.insert( 0, DIRECTORY)
 
 # File Name
-FILENAME = raw_input("Input your STEP File Name : ")
-print("STEP File Name : ", FILENAME)
+print("----------------------------------------------------")
+print("Input your STEP File Name :")
+FILENAME = raw_input()
 
 # Mesh Parameters
-print("Hypothesys for NETGEN")
-MinMeshSize = float(raw_input("MinMeshSize[mm] : ")) # specify in mm
-MaxMeshSize = float(raw_input("MaxMeshSize[mm] : ")) # specify in mm
+print("----------------------------------------------------")
+print("----- Mesh Parameters -----")
+MinMeshSize = float(raw_input("MinMeshSize[m] : ")) # specify in m
+MaxMeshSize = float(raw_input("MaxMeshSize[m] : ")) # specify in m
 #MeshSecondOrder = float(raw_input("SetSecondOrder[0,1] : "))
 MeshSecondOrder = 1
-# SetFiness ::: 0=VeryCoarse, 1=Coarse, 2=Moderate, 3=Fine, 4=VeryFine, 5=Custom
+print("SetFiness ::: 0=VeryCoarse, 1=Coarse, 2=Moderate, 3=Fine, 4=VeryFine, 5=Custom")
 MeshFineness = float(raw_input("SetFineness[0~5] : "))
 if MeshFineness==5:
 	MeshSegPerEdge = float(raw_input("  MeshSegPerEdge[ea] : "))
 	MeshSegPerRadius = float(raw_input("  MeshSegPerRadius[ea] : "))
 	MeshGrowthRate = float(raw_input("  MeshGrowthRate[0~1] : "))
 
-
-"""
-## temp
-DIRECTORY = "/home/osboxes/.config/salome/cad_import/test"
-FILENAME = "bbb.step"
-sys.path.insert( 0, DIRECTORY)
-MinMeshSize = 1
-MaxMeshSize = 10
-MeshSegPerEdge = 20
-MeshSegPerRadius = 20
-MeshGrowthRate = 0.5
-"""
 
 #################################################
 ### GEOM component
@@ -80,6 +71,8 @@ import SALOMEDS
 geompy = geomBuilder.New(theStudy)
 
 # Read STEP File
+print("----------------------------------------------------")
+print("----- Read STEP file ... ")
 PARTS = []
 ASSEMBLY = geompy.ImportSTEP(DIRECTORY+"/"+FILENAME, False, True)
 PARTS = geompy.ExtractShapes(ASSEMBLY, geompy.ShapeType["SOLID"], True)
@@ -135,17 +128,11 @@ smesh = smeshBuilder.New(theStudy)
 # New Mesh
 MESH = smesh.Mesh(PARTITION)
 
-# Parameters (temp)
-MaxMeshSize = 10.0   # specify in mm
-MinMeshSize = 2.0   # specify in mm
-MeshSegPerEdge = 10
-MeshGrowthRate = 0.7
-
 # Parameters
 NETGEN_2D3D = MESH.Tetrahedron(algo=smeshBuilder.NETGEN_1D2D3D)
 NETGEN_Parameters = NETGEN_2D3D.Parameters()
-NETGEN_Parameters.SetMinSize( MinMeshSize*0.001 )
-NETGEN_Parameters.SetMaxSize( MaxMeshSize*0.001 )
+NETGEN_Parameters.SetMinSize( MinMeshSize )
+NETGEN_Parameters.SetMaxSize( MaxMeshSize )
 NETGEN_Parameters.SetSecondOrder( int(MeshSecondOrder) )
 # SetFiness ::: 0=VeryCoarse, 1=Coarse, 2=Moderate, 3=Fine, 4=VeryFine, 5=Custom
 if MeshFineness!=5:
@@ -179,6 +166,8 @@ for aGROUP in range(0,len(GROUP_PARTS)):
 #################################################
 # Make MESH
 #################################################
+print("----------------------------------------------------")
+print("----- Mesh Computing ... ")
 isDone = MESH.Compute()
 
 
@@ -215,7 +204,9 @@ for fGROUP in range(0,len(MGROUP_FACES)):
 		aCriteria.append(aCriterion)
 		aFilter = smesh.GetFilterFromCriteria(aCriteria)
 		aFilter.SetMesh(MESH.GetMesh())
-		if smesh.GetMeshInfo(aFilter)!=smesh.GetMeshInfo(MGROUP_FACES[fGROUP]):
+		info = []
+		info = smesh.GetMeshInfo(aFilter)
+		if info!=smesh.GetMeshInfo(MGROUP_FACES[fGROUP]) and info.values()[10]:
 			MGROUP_CUTS.append( MESH.GroupOnFilter( SMESH.FACE, 'CUT{0}'.format(fGROUP+1), aFilter ) )
 
 
@@ -223,6 +214,8 @@ for fGROUP in range(0,len(MGROUP_FACES)):
 # Make UNV
 #################################################
 FILENAME_HEAD = os.path.splitext(FILENAME)[-2]
+print("----------------------------------------------------")
+print("----- Make UNV ... ")
 try:
   MESH.ExportUNV( DIRECTORY+"/"+FILENAME_HEAD+".unv")
 except:
@@ -232,6 +225,7 @@ except:
 #################################################
 # MESH Info
 #################################################
+print("----------------------------------------------------")
 print "Information about mesh:" 
 print "Number of nodes       : ", MESH.NbNodes()
 print "Number of edges       : ", MESH.NbEdges()
@@ -245,6 +239,8 @@ print "          hexahedrons : ", MESH.NbHexas()
 print "          prisms      : ", MESH.NbPrisms()
 print "          pyramids    : ", MESH.NbPyramids()
 print "          polyhedrons : ", MESH.NbPolyhedrons() 
+print("----------------------------------------------------")
+print("----- FINISHED ! -----")
 
 
 #################################################
