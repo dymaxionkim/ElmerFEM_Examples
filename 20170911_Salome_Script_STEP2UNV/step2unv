@@ -6,6 +6,13 @@
 # by Dymaxion.kim@gmail.com
 ###########################################################
 
+StartTime=$(date +%s)
+
 salome -t ~/.config/salome/step2unv/step2unv.py
 
+EndTime=$(date +%s)
+echo "It takes $(($EndTime - $StartTime)) seconds to complete this task."
+
 exit 0
+
+
