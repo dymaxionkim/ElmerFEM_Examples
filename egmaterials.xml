@@ -270,7 +270,7 @@
     <parameter name="Heat expansion coeff." >1.08e-4</parameter>
  </material>
 
-  <material name="Fused Silica (25 C)" >
+  <material name="(LED) Fused Silica (25 C)" >
    <parameter name="Density" >2200.0</parameter>
     <parameter name="Youngs modulus" >72.0e9</parameter>    
     <parameter name="Poisson ratio" >0.17</parameter>    
@@ -282,8 +282,7 @@
     <parameter name="Melting Point" >1956.0</parameter>
   </material>
  
-
-  <material name="EMC (Epoxy Molding Compound)" >
+  <material name="(LED) EMC, Epoxy Molding Compound" >
     <parameter name="Density" >1850.0</parameter>
     <parameter name="Youngs modulus" >1.193068E+09</parameter>
     <parameter name="Poisson ratio" >0.3</parameter>
@@ -293,7 +292,7 @@
     <parameter name="Heat conductivity" >3</parameter>
   </material>
 
-  <material name="Epoxy" >
+  <material name="(Plastic) Epoxy" >
     <parameter name="Density" >1540.0</parameter>
     <parameter name="Youngs modulus" >356900.67</parameter>
     <parameter name="Poisson ratio" >0.33</parameter>
@@ -303,7 +302,7 @@
     <parameter name="Heat conductivity" >0.35</parameter>
   </material>
 
-  <material name="ABS" >
+  <material name="(Plastic) ABS" >
     <parameter name="Density" >1060.0</parameter>
     <parameter name="Youngs modulus" >316112.03</parameter>
     <parameter name="Poisson ratio" >0.34</parameter>
@@ -313,7 +312,7 @@
     <parameter name="Heat conductivity" >0.35</parameter>
   </material>
 
-  <material name="FR4" >
+  <material name="(PCB) FR4" >
     <parameter name="Density" >1850.0</parameter>
     <parameter name="Youngs modulus" >3500000</parameter>
     <parameter name="Poisson ratio" >0.136</parameter>
@@ -321,6 +320,66 @@
     <parameter name="Heat expansion coeff." >7e-5</parameter>
     <parameter name="Heat capacity" >1300.0</parameter>
     <parameter name="Heat conductivity" >0.35</parameter>
+  </material>
+
+ <material name="(LED) GaN" >
+    <parameter name="Density" >6100.0</parameter>
+    <parameter name="Youngs modulus" >1.8456863E10</parameter>
+    <parameter name="Poisson ratio" >0.352</parameter>
+    <parameter name="Tensile strength" >19374608</parameter>
+    <parameter name="Heat expansion coeff." >6.66e-06</parameter>
+    <parameter name="Heat capacity" >930.37</parameter>
+    <parameter name="Heat conductivity" >130</parameter>
+  </material>
+
+ <material name="(LED) Au, Gold" >
+    <parameter name="Density" >19300.0</parameter>
+    <parameter name="Youngs modulus" >7.9537865E+09</parameter>
+    <parameter name="Poisson ratio" >0.44</parameter>
+    <parameter name="Tensile strength" >8.0047723E+09</parameter>
+    <parameter name="Heat expansion coeff." >14.1e-6</parameter>
+    <parameter name="Heat capacity" >129.0</parameter>
+    <parameter name="Heat conductivity" >318.0</parameter>
+  </material>
+
+ <material name="(LED) Si" >
+    <parameter name="Density" >2330.0</parameter>
+    <parameter name="Youngs modulus" >185.0e9</parameter>
+    <parameter name="Poisson ratio" >0.28</parameter>
+    <parameter name="Tensile strength" >7.1380135E+08</parameter>
+    <parameter name="Heat expansion coeff." >4.68e-6</parameter>
+    <parameter name="Heat capacity" >555.8</parameter>
+    <parameter name="Heat conductivity" >127.0</parameter>
+  </material>
+
+ <material name="(LED) Au-20Sn" >
+    <parameter name="Density" >14510.0</parameter>
+    <parameter name="Youngs modulus" >6.9340702E+09</parameter>
+    <parameter name="Poisson ratio" >0.136</parameter>
+    <parameter name="Tensile strength" >28042196</parameter>
+    <parameter name="Heat expansion coeff." >16.1e-6</parameter>
+    <parameter name="Heat capacity" >388.0</parameter>
+    <parameter name="Heat conductivity" >57.0</parameter>
+  </material>
+
+ <material name="(MCPCB) Prepreg, GlassFiber" >
+    <parameter name="Density" >1850.0</parameter>
+    <parameter name="Youngs modulus" >2.5492905E+09</parameter>
+    <parameter name="Poisson ratio" >0.2</parameter>
+    <parameter name="Tensile strength" >4.4867513E+10</parameter>
+    <parameter name="Heat expansion coeff." >11.6e-6</parameter>
+    <parameter name="Heat capacity" >1000.0</parameter>
+    <parameter name="Heat conductivity" >1.1</parameter>
+  </material>
+
+ <material name="(MCPCB) Thermal Grease" >
+    <parameter name="Density" >1000.0</parameter>
+    <parameter name="Youngs modulus" >1000.0</parameter>
+    <parameter name="Poisson ratio" >0.3</parameter>
+    <parameter name="Tensile strength" >1.0e3</parameter>
+    <parameter name="Heat expansion coeff." >1.0e-6</parameter>
+    <parameter name="Heat capacity" >300.0</parameter>
+    <parameter name="Heat conductivity" >3.0</parameter>
   </material>
 
 </materiallibrary>
