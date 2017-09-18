@@ -140,11 +140,26 @@ for aGroup in range(0,len(p1_solids)):
 ## GROUP (FACE)
 # Ref : http://docs.salome-platform.org/latest/gui/GEOM/tui_working_with_groups_page.html
 #################################################
-## Reference
-#Group_5 = Mesh_1.GetMesh().IntersectListOfGroups( [ Group_4, Group_3 ], 'Group_5' )
-#Group_6 = Mesh_1.GetMesh().CutListOfGroups( [ Group_4 ], [ Group_5 ], 'Group_6' )
-#Group_7 = Mesh_1.GetMesh().CutListOfGroups( [ Group_3 ], [ Group_5 ], 'Group_7' )
+for aSolid in range(0,len(p1_solids)):
+	# Get ID (surface)
+	p1_sufaces = geompy.ExtractShapes(p1_solids[aSolid], geompy.ShapeType["FACE"],False)
+	id_p1_sufaces = []
+	for aSurface in range(0,len(p1_solids)):
+		id_p1_sufaces.append(geompy.GetSubShapeID(p1, p1_sufaces[aSurface]))
+	# make groups (surface)
+	gf = []
+	for aGroup in range(0,len(p1_sufaces)):
+	   gf.append(geompy.CreateGroup(p1, geompy.ShapeType["FACE"]))
+	for aGroup in range(0,len(p1_sufaces)):
+		geompy.AddObject(gf[aGroup], id_p1_sufaces[aGroup])
+	geompy.UnionIDs(gf[aGroup], id_p1_sufaces)
+	# add objects in the study
+	for aGroup in range(0,len(p1_sufaces)):
+		geompy.addToStudyInFather(p1, gf[aGroup], 'face{0}'.format(aGroup+1) )
 
+#Intersect_1 = geompy.IntersectListOfGroups([Group_4, Group_5])
+#Cut_1 = geompy.CutListOfGroups([Group_4], [Intersect_1])
+#Cut_2 = geompy.CutListOfGroups([Group_5], [Intersect_1])
 
 
 #################################################
@@ -185,10 +200,18 @@ smesh.SetName(tetraN.GetMesh(), 'Mesh_1')
 
 print("\n" * 100)
 print "creating mesh groups"
+
 # create mesh groups
 # Sequence defines body and face index in elmer.
 for aGroup in range(0,len(p1_solids)):
     tetraN.GroupOnGeom(g[aGroup],'body{0}'.format(aGroup+1),SMESH.VOLUME)
+
+for aSolid in range(0,len(p1_solids)):
+	p1_sufaces = geompy.ExtractShapes(p1_solids[aSolid], geompy.ShapeType["FACE"],False)
+	gf = []
+	for aGroup in range(0,len(p1_sufaces)):
+		NETGEN_3D_Parameters_1.GroupOnGeom(gf[aGroup],'face{0}'.format(aGroup+1),SMESH.FACE)
+
 
 print "saving file..."
 MeshFileName = path+"/"+"Mesh.unv"
