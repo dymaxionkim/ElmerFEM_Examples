@@ -1,0 +1,164 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "./mesh" "."
+  Include Path ""
+  Results Directory "case01"
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Steady state
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Solver Input File = case01.sif
+  Post File = case01.vtu
+  Use Mesh Names = Logical True   ! Use Salome Group Names
+  Output File = "case01.result"
+End
+
+Constants
+  $LED_X=0.0005   ![m]
+  $LED_Y=0.0015   ![m]
+  $POWER=0.5  ![W]
+  $HTC=10.0   ![W/m^2K] Heat Transfer Coefficient
+  $AMBIENT=25.0   ![C] External Temperature
+End
+
+Body 1
+  Name = HEATSINK
+  Equation = 1
+  Material = 4
+End
+
+Body 2
+  Name = TIM
+  Equation = 1
+  Material = 3
+End
+
+Body 3
+  Name = PCB
+  Equation = 1
+  Material = 4   ! Aluminium
+End
+
+Body 4
+  Name = SLUG
+  Equation = 1
+  Material = 2
+End
+
+Body 5
+  Name = LED
+  Equation = 1
+  Material = 1
+End
+
+Solver 1
+  Equation = Heat Equation
+  Procedure = "HeatSolve" "HeatSolver"
+  Variable = Temperature
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  ! Nonlinear System Convergence Tolerance = 1.0e-7
+  ! Nonlinear System Max Iterations = 20
+  ! Nonlinear System Newton After Iterations = 3
+  ! Nonlinear System Newton After Tolerance = 1.0e-3
+  ! Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1.0e-7
+  BiCGstabl polynomial degree = 2
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = False
+  Linear System Residual Output = 1
+  Linear System Precondition Recompute = 1
+End
+
+Solver 2
+  Equation = Flux and Gradient
+  Calculate Flux = True
+  Flux Coefficient = "Heat Conductivity"
+  Calculate Grad = True
+  Target Variable = Temperature
+  Procedure = "FluxSolver" "FluxSolver"
+  Exec Solver = After Simulation
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  ! Nonlinear System Convergence Tolerance = 1.0e-7
+  ! Nonlinear System Max Iterations = 20
+  ! Nonlinear System Newton After Iterations = 3
+  ! Nonlinear System Newton After Tolerance = 1.0e-3
+  ! Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1.0e-7
+  BiCGstabl polynomial degree = 2
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = False
+  Linear System Residual Output = 1
+  Linear System Precondition Recompute = 1
+End
+
+Equation 1
+  Name = "Equation 1"
+  Active Solvers(2) = 1 2
+End
+
+Material 1
+  Name = "(LED) GaN"
+  Heat Conductivity = 130
+  Heat Capacity = 930.37
+  Heat expansion Coefficient = 6.66e-06
+  Density = 6100.0
+End
+
+Material 2
+  Name = "(LED) Si"
+  Heat Conductivity = 127.0
+  Heat Capacity = 555.8
+  Heat expansion Coefficient = 4.68e-6
+  Density = 2330.0
+End
+
+Material 3
+  Name = "(MCPCB) Thermal Grease"
+  Heat Conductivity = 3.0
+  Heat Capacity = 300.0
+  Heat expansion Coefficient = 1.0e-6
+  Density = 1000.0
+End
+
+Material 4
+  Name = "Aluminium"
+  Heat Conductivity = 237.0
+  Heat Capacity = 897.0
+  Heat expansion Coefficient = 23.1e-6
+  Density = 2700.0
+End
+
+Boundary Condition 1   ! LED (HeatSource)
+  Name = CUT5
+  Heat Flux = $(POWER/(LED_X*LED_Y))  ![W/m^3]
+End
+
+Boundary Condition 2   ! HEATSINK
+  Name = CUT1
+  Heat Transfer Coefficient = $HTC ![W/m^2K]
+  External Temperature = $AMBIENT ![C]
+End
