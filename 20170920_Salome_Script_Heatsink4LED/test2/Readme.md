@@ -51,5 +51,27 @@ $ ./Heatsink4LED.sh
 ![005](https://user-images.githubusercontent.com/12775748/30620889-03c495ce-9de3-11e7-8963-6595a74e1728.png)
 
 
+* Scanning condition in `case.sif` file
+
+```cpp
+Boundary Condition 2   ! HEATSINK
+  Name = CUT1
+  ! HTC [W/m^2K]
+  Heat Transfer Coefficient = variable time
+    real
+      1 5.0
+      2 10.0
+      3 15.0
+      4 25.0
+      5 50.0
+      6 75.0
+      7 100.0
+      8 150.0
+      9 200.0
+      10 250.0
+    end
+  External Temperature = $AMBIENT ![C]
+End
+```
 
 ## Thank you!
