@@ -2,7 +2,7 @@
 # Heatsink4LED with Salome and Elmer (V02)
 
 _Auto Modeling, Import, Grouping, Meshing, and Analysis_
-
+_Find correct junction temperature in LED Packages._
 
 ## PreRequisite
 * Linux OS
