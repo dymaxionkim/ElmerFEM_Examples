@@ -5,14 +5,14 @@ _Import, Grouping and Meshing for a STEP File_
 
 
 ## PreRequisite
-* Linux OS
+* Linux OS / Windows OS
 * ElmerGUI
 * Salome Platform 8.2
 
 
 ## Install
 
-* Download and Path
+* Download and Path (on Linux)
 
 ```bash
 mkdir ~/.config/salome/step2unv
@@ -26,7 +26,25 @@ echo "export PATH=\"/home/MYHOME/.config/salome/step2unv:\$PATH\"" >> ~/.bashrc
 echo "" >> ~/.bashrc
 ```
 
-* Check Salome excecutor's path. If necessary, modify `step2unv` file.
+* Download and Path (on Windows)
+
+Install Salome platform Windows version in `C:\Salome`.
+
+Download next files in `C:\Salome\STEP2UNV` :
+
+```bash
+https://github.com/dymaxionkim/ElmerFEM_Examples/raw/master/20170911_Salome_Script_STEP2UNV/step2unv.py
+https://github.com/dymaxionkim/ElmerFEM_Examples/raw/master/20170911_Salome_Script_STEP2UNV/step2unv.bat
+```
+
+Add path in `path` system variable like this :
+
+```bash
+C:\Salome\SALOME-8.2.0-WIN64\WORK
+C:\Salome\STEP2UNV
+```
+
+* Check Salome excecutor's path. If necessary, modify `step2unv` file. (on Linux)
 
 
 ## How to use
