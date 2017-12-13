@@ -1,0 +1,35 @@
+
+$Ambient_Temperature = 25.0
+$Arterial_temperature = 37.0
+
+$ function LEDDermis(x) { \
+  I0 = 0.002; \
+  sigma = 0.005; \
+  Ab = 12.0; \
+  Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
+  _HeatSource = Q; \
+}
+
+$ function LEDFat(x) { \
+  I0 = 0.002; \
+  sigma = 0.005; \
+  Ab = 9.0; \
+  Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
+  _HeatSource = Q; \
+}
+
+$ function LEDMuscle(x) { \
+  I0 = 0.002; \
+  sigma = 0.005; \
+  Ab = 3.0; \
+  Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
+  _HeatSource = Q; \
+}
+
+
+Variable Coordinate; Real MATC "LED_Dermis(tx)"
+Variable Coordinate; Real MATC "LED_Fat(tx)"
+Variable Coordinate; Real MATC "LED_Muscle(tx)"
+
+
+
