@@ -26,12 +26,28 @@ Constants
 $Ambient_Temperature = 25.0
 $Arterial_temperature = 37.0
 
-$ function Heatsource(x) { \
+$function LED_Dermis(x) { \
   I0 = 0.002; \
   sigma = 0.005; \
   Ab = 12.0; \
   Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
-  _HeatSource = Q; \
+  _LED_Dermis = Q; \
+}
+
+$function LED_Fat(x) { \
+  I0 = 0.002; \
+  sigma = 0.005; \
+  Ab = 9.0; \
+  Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
+  _LED_Fat = Q; \
+}
+
+$function LED_Muscle(x) { \
+  I0 = 0.002; \
+  sigma = 0.005; \
+  Ab = 3.0; \
+  Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
+  _LED_Muscle = Q; \
 }
 
 End
@@ -50,7 +66,7 @@ Body 2
   Name = "Body Property 2"
   Equation = 1
   Material = 2
-  Body Force = 1
+  Body Force = 2
   Initial condition = 1
 End
 
@@ -59,7 +75,7 @@ Body 3
   Name = "Body Property 3"
   Equation = 1
   Material = 3
-  Body Force = 1
+  Body Force = 3
   Initial condition = 1
 End
 
@@ -68,6 +84,34 @@ Solver 2
   Variable = Temperature
   Procedure = "HeatSolve" "HeatSolver"
   Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1.0e-10
+  BiCGstabl polynomial degree = 2
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = False
+  Linear System Residual Output = 1
+  Linear System Precondition Recompute = 1
+End
+
+Solver 3
+  Equation = Flux and Gradient
+  Calculate Flux = True
+  Calculate Grad = True
+  Procedure = "FluxSolver" "FluxSolver"
+  Exec Solver = After Timestep
   Stabilize = True
   Bubbles = False
   Lumped Mass Matrix = False
@@ -101,7 +145,7 @@ End
 
 Equation 1
   Name = "Equation 1"
-  Active Solvers(2) = 2 1
+  Active Solvers(3) = 2 3 1
 End
 
 Material 1
@@ -130,7 +174,17 @@ End
 
 Body Force 1
   Name = "BodyForce_Dermis"
-  Heat Source = Variable Coordinate; Real MATC "Heatsource(tx)"
+  Heat Source = Variable Coordinate; Real MATC "LED_Dermis(tx)"
+End
+
+Body Force 2
+  Name = "BodyForce_Fat"
+  Heat Source = Variable Coordinate; Real MATC "LED_Fat(tx)"
+End
+
+Body Force 3
+  Name = "BodyForce_Muscle"
+  Heat Source = Variable Coordinate; Real MATC "LED_Muscle(tx)"
 End
 
 Initial Condition 1

@@ -2,28 +2,28 @@
 $Ambient_Temperature = 25.0
 $Arterial_temperature = 37.0
 
-$ function LEDDermis(x) { \
+$function LED_Dermis(x) { \
   I0 = 0.002; \
   sigma = 0.005; \
   Ab = 12.0; \
   Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
-  _HeatSource = Q; \
+  _LED_Dermis = Q; \
 }
 
-$ function LEDFat(x) { \
+$function LED_Fat(x) { \
   I0 = 0.002; \
   sigma = 0.005; \
   Ab = 9.0; \
   Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
-  _HeatSource = Q; \
+  _LED_Fat = Q; \
 }
 
-$ function LEDMuscle(x) { \
+$function LED_Muscle(x) { \
   I0 = 0.002; \
   sigma = 0.005; \
   Ab = 3.0; \
   Q = I0*Ab*exp(10*Ab*x(1)-100000*x(0)*x(0))/(2*sigma*sigma); \
-  _HeatSource = Q; \
+  _LED_Muscle = Q; \
 }
 
 
