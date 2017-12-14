@@ -1,0 +1,29 @@
+$Ambient_Temperature = 25.0
+$Arterial_temperature = 37.0
+$Arterial_Density = 1049.75
+$Arterial_Heat_Capacity = 3617.0
+
+$function LED_Dermis(x) { \
+  I0 = 2000.0; \
+  sigma = 0.005; \
+  Ab = 0.0012; \
+  Q = I0*Ab*exp(Ab*x(1)-x(0)*x(0))/(2*sigma*sigma); \
+  _LED_Dermis = Q; \
+}
+
+$function LED_Fat(x) { \
+  I0 = 2000.0; \
+  sigma = 0.005; \
+  Ab = 0.0009; \
+  Q = I0*Ab*exp(Ab*x(1)-x(0)*x(0))/(2*sigma*sigma); \
+  _LED_Fat = Q; \
+}
+
+$function LED_Muscle(x) { \
+  I0 = 2000.0; \
+  sigma = 0.005; \
+  Ab = 0.003; \
+  Q = I0*Ab*exp(Ab*x(1)-x(0)*x(0))/(2*sigma*sigma); \
+  _LED_Muscle = Q; \
+}
+
