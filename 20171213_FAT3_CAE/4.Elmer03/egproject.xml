@@ -21,7 +21,7 @@
       </widget>
       <widget type="LineEdit">
          <objectName>resultsDirectoryEdit</objectName>
-         <text>case01</text>
+         <text>case05</text>
       </widget>
       <widget type="LineEdit">
          <objectName>steadyStateMaxIterEdit</objectName>
@@ -33,7 +33,7 @@
       </widget>
       <widget type="LineEdit">
          <objectName>timeStepIntervalsEdit</objectName>
-         <text></text>
+         <text>140</text>
       </widget>
       <widget type="LineEdit">
          <objectName>outputIntervalsEdit</objectName>
@@ -41,11 +41,11 @@
       </widget>
       <widget type="LineEdit">
          <objectName>timestepSizesEdit</objectName>
-         <text></text>
+         <text>1</text>
       </widget>
       <widget type="LineEdit">
          <objectName>solverInputFileEdit</objectName>
-         <text>case01.sif</text>
+         <text>case05.sif</text>
       </widget>
       <widget type="LineEdit">
          <objectName>postFileEdit</objectName>
@@ -82,34 +82,39 @@
       <widget type="TextEdit">
          <objectName>constantsFreeTextEdit</objectName>
          <text>$Ambient_Temperature = 25.0
+$HTC = 5.0
+
 $Arterial_temperature = 37.0
 $Arterial_Density = 1049.75
 $Arterial_Heat_Capacity = 3617.0
 
-$function LED_Dermis(x) { \
-  I0 = 2000.0; \
-  sigma = 0.005; \
-  Ab = 0.0012; \
-  Q = I0*Ab*exp(Ab*x(1)-x(0)*x(0))/(2*sigma*sigma); \
-  _LED_Dermis = Q; \
+$function LED(x) {\
+  Depth_Dermis = -0.0015;\
+  Depth_Fat = -0.005;\
+  Depth_Muscle = -0.020;\
+  I0 = 2000.0;\
+  sigma = 0.0060;\
+  Ab_Dermis = 0.0012;\
+  Ab_Fat = 0.0009;\
+  Ab_Muscle = 0.003;\
+  if (x(1)>Depth_Dermis) Q=I0*Ab_Dermis*exp(Ab_Dermis*x(1)-x(0)*x(0)/(2*sigma*sigma));\
+  if (x(1)&lt;(Depth_Dermis+Depth_Fat)) Q=I0*Ab_Muscle*exp(Ab_Muscle*x(1)-x(0)*x(0)/(2*sigma*sigma));\
+  else Q=I0*Ab_Fat*exp(Ab_Fat*x(1)-x(0)*x(0)/(2*sigma*sigma));\
+  _LED = Q;\
 }
 
-$function LED_Fat(x) { \
-  I0 = 2000.0; \
-  sigma = 0.005; \
-  Ab = 0.0009; \
-  Q = I0*Ab*exp(Ab*x(1)-x(0)*x(0))/(2*sigma*sigma); \
-  _LED_Fat = Q; \
-}
-
-$function LED_Muscle(x) { \
-  I0 = 2000.0; \
-  sigma = 0.005; \
-  Ab = 0.003; \
-  Q = I0*Ab*exp(Ab*x(1)-x(0)*x(0))/(2*sigma*sigma); \
-  _LED_Muscle = Q; \
-}
-</text>
+$function Perfusion(x) {\
+  Depth_Dermis = -0.0015;\
+  Depth_Fat = -0.005;\
+  Depth_Muscle = -0.020;\
+  Perfusion_Dermis = 0.002;\
+  Perfusion_Fat = 0.00046666667;\
+  Perfusion_Muscle = 0.00063333333;\
+  if (x(1)>Depth_Dermis) P=Perfusion_Dermis;\
+  if (x(1)&lt;(Depth_Dermis+Depth_Fat)) P=Perfusion_Muscle;\
+  else P=Perfusion_Fat;\
+  _Perfusion = P;\
+}</text>
       </widget>
       <widget type="ComboBox">
          <objectName>maxOutputLevelCombo</objectName>
@@ -129,7 +134,7 @@ $function LED_Muscle(x) { \
       </widget>
       <widget type="ComboBox">
          <objectName>simulationTypeCombo</objectName>
-         <currentIndex>0</currentIndex>
+         <currentIndex>1</currentIndex>
       </widget>
    </generalsetup>
    <parallelsettings>
@@ -3879,7 +3884,7 @@ $function LED_Muscle(x) { \
    <bodyforce>
       <item index="0">
          <active>1</active>
-         <name>BodyForce_Dermis</name>
+         <name>BodyForce_LED</name>
          <widget type="Edit">
             <key>/Electrostatics/BodyForce/Charge Density/0</key>
             <value></value>
@@ -3890,7 +3895,7 @@ $function LED_Muscle(x) { \
          </widget>
          <widget type="Edit">
             <key>/Heat Equation/BodyForce/Heat Source/0</key>
-            <value>Variable Coordinate; Real MATC "LED_Dermis(tx)"</value>
+            <value>Variable Coordinate; Real MATC "LED(tx)"</value>
          </widget>
          <widget type="TextEdit">
             <key>/Reynolds Equation/BodyForce/Free text/0</key>
@@ -4114,7 +4119,7 @@ $function LED_Muscle(x) { \
          </widget>
          <widget type="Edit">
             <key>/Heat Equation/BodyForce/Perfusion Rate/0</key>
-            <value>0.002 ![L/kg/s]</value>
+            <value>Variable Coordinate; Real MATC "Perfusion(tx)"</value>
          </widget>
          <widget type="Edit">
             <key>/Poisson-Boltzmann equation/BodyForce/Charge Density/0</key>
@@ -4461,1174 +4466,6 @@ $function LED_Muscle(x) { \
             <value>Volume sources</value>
          </widget>
       </item>
-      <item index="1">
-         <active>1</active>
-         <name>BodyForce_Fat</name>
-         <widget type="Edit">
-            <key>/Electrostatics/BodyForce/Charge Density/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Elastic Plates/BodyForce/Bodywise Dirichlet Conditions/1</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Heat Source/1</key>
-            <value>Variable Coordinate; Real MATC "LED_Fat(tx)"</value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Reynolds Equation/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/MgDyn2D/BodyForce/Calculate Potential/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 2 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 3 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Vector Helmholtz Equation/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Linear elasticity/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/MgDyn2DHarmonic/BodyForce/Calculate Potential/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="Label">
-            <key>/Model PDE/BodyForce/Source term/1</key>
-            <value>Source term</value>
-         </widget>
-         <widget type="Label">
-            <key>/Navier-Stokes/BodyForce/Volume forces/1</key>
-            <value>Volume forces</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Navier-Stokes/BodyForce/Hydrostatic pressure/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 1 (real part)/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 1 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Reynolds Equation/BodyForce/FilmPressure Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Potential Field/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Potential Coefficient/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Pressure/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/Accumulation Flux 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Helmholtz Equation/BodyForce/Volume source 1 (real part)/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/MgDyn2D/BodyForce/Properties/1</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/Accumulation Flux 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/Accumulation Flux 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 3 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Force 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 2 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 1 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Force 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Force 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 3 (real part)/1</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/K-Epsilon/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Reynolds Equation/BodyForce/Filmpressure Lower Limit/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 2 (real part)/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Heat Equation/BodyForce/Bodywise Dirichlet Conditions/1</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Advection Diffusion Equation/BodyForce/Physical Units/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn2DHarmonic/BodyForce/Current Density/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn2DHarmonic/BodyForce/Current Density Im/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Perfusion Density/1</key>
-            <value>$Arterial_Density</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Linear elasticity/BodyForce/Bodywise Dirichlet Conditions/1</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Label">
-            <key>/MgDyn/BodyForce/External electric potential/1</key>
-            <value>External electric potential</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/SST K-Omega/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Label">
-            <key>/Electrostatics/BodyForce/Properties/1</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 1 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 2 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Stress 6-vector/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Navier-Stokes/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 3 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 3 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Pressure/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Reynolds Equation/BodyForce/FilmPressure/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Heat Equation/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Perfusion Rate/1</key>
-            <value>0.00046666667 ![L/kg/s]</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Poisson-Boltzmann equation/BodyForce/Charge Density/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 2 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Helmholtz Equation/BodyForce/Volume sources/1</key>
-            <value>Volume sources</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Navier-Stokes/BodyForce/Potential Force/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Heat Equation/BodyForce/Friction Heat/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Heat Equation/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn2D/BodyForce/Current Density/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 1 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn/BodyForce/Current Density 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn/BodyForce/Current Density 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Navier-Stokes/BodyForce/Bodywise Dirichlet Conditions/1</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Richards Equation/BodyForce/Total Head Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Poisson-Boltzmann equation/BodyForce/Properties/1</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn/BodyForce/Current Density 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Navier-Stokes/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Free Surface/BodyForce/Bodywise Dirichlet Conditions/1</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Label">
-            <key>/Reynolds Equation/BodyForce/Dirichlet Conditions - Cavitation/1</key>
-            <value>Dirichlet Conditions - Cavitation</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Force 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Nonlinear elasticity/BodyForce/Volume forces/1</key>
-            <value>Volume forces</value>
-         </widget>
-         <widget type="Label">
-            <key>/Static Current Conduction/BodyForce/Properties/1</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Force 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Force 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Force 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Force 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Force 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Nonlinear elasticity/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Temperature Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/FreeSurface/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Integral Heat Source/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/K-Epsilon/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Temperature/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Damping/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Helmholtz Equation/BodyForce/Volume source 2 (imag part)/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/FreeSurface Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Heat Equation/BodyForce/Perfusion/1</key>
-            <value>Perfusion</value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Mesh Update/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Heat Equation/BodyForce/Volume sources/1</key>
-            <value>Volume sources</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Perfusion Reference Temperature/1</key>
-            <value>$Arterial_temperature</value>
-         </widget>
-         <widget type="Label">
-            <key>/Free Surface/BodyForce/Volume source/1</key>
-            <value>Volume source</value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Helmholtz Equation/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Navier-Stokes/BodyForce/Boussinesq/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="Label">
-            <key>/Richards Equation/BodyForce/Bodywise Dirichlet Conditions/1</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Label">
-            <key>/Navier-Stokes/BodyForce/...other options/1</key>
-            <value>...other options</value>
-         </widget>
-         <widget type="Label">
-            <key>/Vector Helmholtz Equation/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Label">
-            <key>/Nonlinear elasticity/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Label">
-            <key>/MgDyn/BodyForce/Given current density/1</key>
-            <value>Given current density</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Heat Equation/BodyForce/Joule Heat/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Advection Diffusion Equation/BodyForce/Concentration Diffusion Source/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Reynolds Equation/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/Accumulation/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/MgDyn2DHarmonic/BodyForce/Properties/1</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Perfusion Heat Capacity/1</key>
-            <value>$Arterial_Heat_Capacity</value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn/BodyForce/Electric Potential/1</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Linear elasticity/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 1 (imag part)/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 2 (imag part)/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 2 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Richards Equation/BodyForce/Source terms/1</key>
-            <value>Source terms</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 3 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 3 (imag part)/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 1 Condition/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Elastic Plates/BodyForce/Surface forces and impedance/1</key>
-            <value>Surface forces and impedance</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 3/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 2/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Mesh Update/BodyForce/Bodywise Dirichlet Conditions/1</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Label">
-            <key>/Advection Diffusion Equation/BodyForce/Volume sources/1</key>
-            <value>Volume sources</value>
-         </widget>
-         <widget type="Label">
-            <key>/Linear elasticity/BodyForce/Volume forces/1</key>
-            <value>Volume forces</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 1/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Helmholtz Equation/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Static Current Conduction/BodyForce/Current Source/1</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/SST K-Omega/BodyForce/Free text/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Mesh Update/BodyForce/Free text input/1</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Richards Equation/BodyForce/Total Head/1</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Nonlinear elasticity/BodyForce/Bodywise Dirichlet Conditions/1</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Strain 6-vector/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Model PDE/BodyForce/Field Source/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Spring/1</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Richards Equation/BodyForce/Richards Source/1</key>
-            <value></value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Heat Equation/BodyForce/Smart Heater Control/1</key>
-            <value>0</value>
-         </widget>
-         <widget type="Label">
-            <key>/Vector Helmholtz Equation/BodyForce/Volume sources/1</key>
-            <value>Volume sources</value>
-         </widget>
-      </item>
-      <item index="2">
-         <active>1</active>
-         <name>BodyForce_Muscle</name>
-         <widget type="Edit">
-            <key>/Richards Equation/BodyForce/Richards Source/2</key>
-            <value></value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Heat Equation/BodyForce/Smart Heater Control/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="Label">
-            <key>/Vector Helmholtz Equation/BodyForce/Volume sources/2</key>
-            <value>Volume sources</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Electrostatics/BodyForce/Charge Density/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Elastic Plates/BodyForce/Bodywise Dirichlet Conditions/2</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Heat Source/2</key>
-            <value>Variable Coordinate; Real MATC "LED_Muscle(tx)"</value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Reynolds Equation/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/MgDyn2D/BodyForce/Calculate Potential/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 2 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 3 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Vector Helmholtz Equation/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Linear elasticity/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/MgDyn2DHarmonic/BodyForce/Calculate Potential/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="Label">
-            <key>/Model PDE/BodyForce/Source term/2</key>
-            <value>Source term</value>
-         </widget>
-         <widget type="Label">
-            <key>/Navier-Stokes/BodyForce/Volume forces/2</key>
-            <value>Volume forces</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Navier-Stokes/BodyForce/Hydrostatic pressure/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 1 (real part)/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 1 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Reynolds Equation/BodyForce/FilmPressure Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Potential Field/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Potential Coefficient/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Pressure/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/Accumulation Flux 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Helmholtz Equation/BodyForce/Volume source 1 (real part)/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/MgDyn2D/BodyForce/Properties/2</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/Accumulation Flux 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/Accumulation Flux 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 3 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Force 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 2 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 1 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Force 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Force 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 3 (real part)/2</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/K-Epsilon/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Reynolds Equation/BodyForce/Filmpressure Lower Limit/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 2 (real part)/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Heat Equation/BodyForce/Bodywise Dirichlet Conditions/2</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Advection Diffusion Equation/BodyForce/Physical Units/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn2DHarmonic/BodyForce/Current Density/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn2DHarmonic/BodyForce/Current Density Im/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Perfusion Density/2</key>
-            <value>$Arterial_Density</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Linear elasticity/BodyForce/Bodywise Dirichlet Conditions/2</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Label">
-            <key>/MgDyn/BodyForce/External electric potential/2</key>
-            <value>External electric potential</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/SST K-Omega/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Label">
-            <key>/Electrostatics/BodyForce/Properties/2</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Deflection 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 1 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 2 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Stress 6-vector/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Navier-Stokes/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 3 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 3 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Pressure/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Reynolds Equation/BodyForce/FilmPressure/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Heat Equation/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Perfusion Rate/2</key>
-            <value>0.00063333333 ![L/kg/s]</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Poisson-Boltzmann equation/BodyForce/Charge Density/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 2 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Helmholtz Equation/BodyForce/Volume sources/2</key>
-            <value>Volume sources</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Navier-Stokes/BodyForce/Potential Force/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Heat Equation/BodyForce/Friction Heat/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Heat Equation/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn2D/BodyForce/Current Density/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 1 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn/BodyForce/Current Density 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn/BodyForce/Current Density 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Navier-Stokes/BodyForce/Bodywise Dirichlet Conditions/2</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Richards Equation/BodyForce/Total Head Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Poisson-Boltzmann equation/BodyForce/Properties/2</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn/BodyForce/Current Density 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Navier-Stokes/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Free Surface/BodyForce/Bodywise Dirichlet Conditions/2</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Label">
-            <key>/Reynolds Equation/BodyForce/Dirichlet Conditions - Cavitation/2</key>
-            <value>Dirichlet Conditions - Cavitation</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Force 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Nonlinear elasticity/BodyForce/Volume forces/2</key>
-            <value>Volume forces</value>
-         </widget>
-         <widget type="Label">
-            <key>/Static Current Conduction/BodyForce/Properties/2</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Force 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Force 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Force 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Force 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Force 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Nonlinear elasticity/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Temperature Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/FreeSurface/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Integral Heat Source/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/K-Epsilon/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Temperature/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Damping/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Helmholtz Equation/BodyForce/Volume source 2 (imag part)/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/FreeSurface Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Heat Equation/BodyForce/Perfusion/2</key>
-            <value>Perfusion</value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Mesh Update/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Heat Equation/BodyForce/Volume sources/2</key>
-            <value>Volume sources</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Perfusion Reference Temperature/2</key>
-            <value>$Arterial_temperature</value>
-         </widget>
-         <widget type="Label">
-            <key>/Free Surface/BodyForce/Volume source/2</key>
-            <value>Volume source</value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Helmholtz Equation/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Navier-Stokes/BodyForce/Boussinesq/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="Label">
-            <key>/Richards Equation/BodyForce/Bodywise Dirichlet Conditions/2</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Label">
-            <key>/Navier-Stokes/BodyForce/...other options/2</key>
-            <value>...other options</value>
-         </widget>
-         <widget type="Label">
-            <key>/Vector Helmholtz Equation/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Label">
-            <key>/Nonlinear elasticity/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Label">
-            <key>/MgDyn/BodyForce/Given current density/2</key>
-            <value>Given current density</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="CheckBox">
-            <key>/Heat Equation/BodyForce/Joule Heat/2</key>
-            <value>0</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Advection Diffusion Equation/BodyForce/Concentration Diffusion Source/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Reynolds Equation/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Free Surface/BodyForce/Accumulation/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Navier-Stokes/BodyForce/Velocity 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/MgDyn2DHarmonic/BodyForce/Properties/2</key>
-            <value>Properties</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Heat Equation/BodyForce/Perfusion Heat Capacity/2</key>
-            <value>$Arterial_Heat_Capacity</value>
-         </widget>
-         <widget type="Edit">
-            <key>/MgDyn/BodyForce/Electric Potential/2</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/Linear elasticity/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 1 (imag part)/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 2 (imag part)/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 2 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Richards Equation/BodyForce/Source terms/2</key>
-            <value>Source terms</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 3 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Vector Helmholtz Equation/BodyForce/Current Density 3 (imag part)/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Nonlinear elasticity/BodyForce/Displacement 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Displacement 1 Condition/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Elastic Plates/BodyForce/Surface forces and impedance/2</key>
-            <value>Surface forces and impedance</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 3/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 2/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Mesh Update/BodyForce/Bodywise Dirichlet Conditions/2</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Label">
-            <key>/Advection Diffusion Equation/BodyForce/Volume sources/2</key>
-            <value>Volume sources</value>
-         </widget>
-         <widget type="Label">
-            <key>/Linear elasticity/BodyForce/Volume forces/2</key>
-            <value>Volume forces</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Mesh Update/BodyForce/Mesh Update 1/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Helmholtz Equation/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Static Current Conduction/BodyForce/Current Source/2</key>
-            <value></value>
-         </widget>
-         <widget type="TextEdit">
-            <key>/SST K-Omega/BodyForce/Free text/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Mesh Update/BodyForce/Free text input/2</key>
-            <value>Free text input</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Richards Equation/BodyForce/Total Head/2</key>
-            <value></value>
-         </widget>
-         <widget type="Label">
-            <key>/Nonlinear elasticity/BodyForce/Bodywise Dirichlet Conditions/2</key>
-            <value>Bodywise Dirichlet Conditions</value>
-         </widget>
-         <widget type="Edit">
-            <key>/Linear elasticity/BodyForce/Strain 6-vector/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Model PDE/BodyForce/Field Source/2</key>
-            <value></value>
-         </widget>
-         <widget type="Edit">
-            <key>/Elastic Plates/BodyForce/Spring/2</key>
-            <value></value>
-         </widget>
-      </item>
    </bodyforce>
    <initialcondition>
       <item index="0">
@@ -5908,7 +4745,7 @@ $function LED_Muscle(x) { \
          </widget>
          <widget type="Edit">
             <key>/Heat Equation/InitialCondition/Temperature/0</key>
-            <value>$Ambient_Temperature</value>
+            <value>$Arterial_temperature</value>
          </widget>
          <widget type="Edit">
             <key>/Richards Equation/InitialCondition/Total Head/0</key>
@@ -6026,7 +4863,7 @@ $function LED_Muscle(x) { \
          </widget>
          <widget type="Edit">
             <key>/Heat Equation/BoundaryCondition/Heat Transfer Coeff./0</key>
-            <value>10.0</value>
+            <value>$HTC</value>
          </widget>
          <widget type="Label">
             <key>/Static Current Conduction/BoundaryCondition/Neumann conditions/0</key>
@@ -12288,7 +11125,7 @@ $function LED_Muscle(x) { \
          </widget>
          <widget type="ComboBox">
             <objectName>bodyForceCombo</objectName>
-            <currentIndex>2</currentIndex>
+            <currentIndex>1</currentIndex>
          </widget>
          <widget type="ComboBox">
             <objectName>initialConditionCombo</objectName>
@@ -12310,7 +11147,7 @@ $function LED_Muscle(x) { \
          </widget>
          <widget type="ComboBox">
             <objectName>bodyForceCombo</objectName>
-            <currentIndex>3</currentIndex>
+            <currentIndex>1</currentIndex>
          </widget>
          <widget type="ComboBox">
             <objectName>initialConditionCombo</objectName>

@@ -2,19 +2,21 @@ Header
   CHECK KEYWORDS Warn
   Mesh DB "." "."
   Include Path ""
-  Results Directory "case01"
+  Results Directory "case05"
 End
 
 Simulation
   Max Output Level = 5
   Coordinate System = Cartesian
   Coordinate Mapping(3) = 1 2 3
-  Simulation Type = Steady state
+  Simulation Type = Transient
   Steady State Max Iterations = 1
   Output Intervals = 1
   Timestepping Method = BDF
   BDF Order = 1
-  Solver Input File = case01.sif
+  Timestep intervals = 140
+  Timestep Sizes = 1
+  Solver Input File = case05.sif
 End
 
 Constants
@@ -57,7 +59,6 @@ $function Perfusion(x) {\
   else P=Perfusion_Fat;\
   _Perfusion = P;\
 }
-
 End
 
 Body 1
@@ -163,7 +164,7 @@ End
 
 Initial Condition 1
   Name = "InitialCondition 1"
-  Temperature = $Ambient_Temperature
+  Temperature = $Arterial_temperature
 End
 
 Boundary Condition 1

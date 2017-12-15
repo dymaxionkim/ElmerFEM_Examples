@@ -2,7 +2,7 @@ Header
   CHECK KEYWORDS Warn
   Mesh DB "." "."
   Include Path ""
-  Results Directory "case01"
+  Results Directory "case04"
 End
 
 Simulation
@@ -14,7 +14,7 @@ Simulation
   Output Intervals = 1
   Timestepping Method = BDF
   BDF Order = 1
-  Solver Input File = case01.sif
+  Solver Input File = case04.sif
 End
 
 Constants
@@ -57,7 +57,6 @@ $function Perfusion(x) {\
   else P=Perfusion_Fat;\
   _Perfusion = P;\
 }
-
 End
 
 Body 1
@@ -155,10 +154,6 @@ End
 Body Force 1
   Name = "BodyForce_LED"
   Heat Source = Variable Coordinate; Real MATC "LED(tx)"
-  Perfusion Density = $Arterial_Density
-  Perfusion Rate = Variable Coordinate; Real MATC "Perfusion(tx)"
-  Perfusion Reference Temperature = $Arterial_temperature
-  Perfusion Heat Capacity = $Arterial_Heat_Capacity
 End
 
 Initial Condition 1
