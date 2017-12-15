@@ -14,8 +14,8 @@ Simulation
   Output Intervals = 1
   Timestepping Method = BDF
   BDF Order = 1
-  Timestep intervals = 1400
-  Timestep Sizes = 0.1
+  Timestep intervals = 60
+  Timestep Sizes = 60
   Solver Input File = case02.sif
 End
 

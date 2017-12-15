@@ -2,19 +2,21 @@ Header
   CHECK KEYWORDS Warn
   Mesh DB "." "."
   Include Path ""
-  Results Directory "case04"
+  Results Directory "case05"
 End
 
 Simulation
   Max Output Level = 5
   Coordinate System = Cartesian
   Coordinate Mapping(3) = 1 2 3
-  Simulation Type = Steady state
+  Simulation Type = Transient
   Steady State Max Iterations = 1
   Output Intervals = 1
   Timestepping Method = BDF
   BDF Order = 1
-  Solver Input File = case04.sif
+  Timestep intervals = 60
+  Timestep Sizes = 60
+  Solver Input File = case05.sif
 End
 
 Constants
@@ -24,7 +26,7 @@ Constants
   Boltzmann Constant = 1.3807e-23
   Unit Charge = 1.602e-19
 $Ambient_Temperature = 25.0
-$HTC = 5.0
+$HTC = 10.0
 
 $Arterial_temperature = 37.0
 $Arterial_Density = 1049.75
@@ -34,11 +36,11 @@ $function LED(x) {\
   Depth_Dermis = -0.0015;\
   Depth_Fat = -0.005;\
   Depth_Muscle = -0.020;\
-  I0 = 2000.0;\
-  sigma = 0.0060;\
-  Ab_Dermis = 0.0012;\
-  Ab_Fat = 0.0009;\
-  Ab_Muscle = 0.003;\
+  I0 = 2.0;\
+  sigma = 0.0020;\
+  Ab_Dermis = 11.7;\
+  Ab_Fat = 8.7;\
+  Ab_Muscle = 29.3;\
   if (x(1)>Depth_Dermis) Q=I0*Ab_Dermis*exp(Ab_Dermis*x(1)-x(0)*x(0)/(2*sigma*sigma));\
   if (x(1)<(Depth_Dermis+Depth_Fat)) Q=I0*Ab_Muscle*exp(Ab_Muscle*x(1)-x(0)*x(0)/(2*sigma*sigma));\
   else Q=I0*Ab_Fat*exp(Ab_Fat*x(1)-x(0)*x(0)/(2*sigma*sigma));\
@@ -154,11 +156,15 @@ End
 Body Force 1
   Name = "BodyForce_LED"
   Heat Source = Variable Coordinate; Real MATC "LED(tx)"
+  Perfusion Density = $Arterial_Density
+  Perfusion Rate = Variable Coordinate; Real MATC "Perfusion(tx)"
+  Perfusion Reference Temperature = $Arterial_temperature
+  Perfusion Heat Capacity = $Arterial_Heat_Capacity
 End
 
 Initial Condition 1
   Name = "InitialCondition 1"
-  Temperature = $Ambient_Temperature
+  Temperature = $Arterial_temperature
 End
 
 Boundary Condition 1
