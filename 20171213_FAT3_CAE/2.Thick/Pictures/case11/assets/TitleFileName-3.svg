@@ -1,0 +1,77 @@
+<?xml version="1.0" ?><!-- Created with Inkscape (http://www.inkscape.org/) --><svg height="1080" id="svg2383" inkscape:output_extension="org.inkscape.output.svg.inkscape" inkscape:version="0.48.4 r9939" sodipodi:docname="Gold_2.svg" sodipodi:version="0.32" version="1.0" width="1920" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs id="defs2385">
+    <linearGradient id="linearGradient3684" inkscape:collect="always">
+      <stop id="stop3686" offset="0" style="stop-color:#dea436;stop-opacity:1"/>
+      <stop id="stop3688" offset="1" style="stop-color:#f8c050;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3670" inkscape:collect="always">
+      <stop id="stop3672" offset="0" style="stop-color:#dcaa38;stop-opacity:1"/>
+      <stop id="stop3674" offset="1" style="stop-color:#f4c54f;stop-opacity:1"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3182" inkscape:collect="always">
+      <stop id="stop3184" offset="0" style="stop-color:#ffffff;stop-opacity:0.55"/>
+      <stop id="stop3186" offset="1" style="stop-color:#ffffff;stop-opacity:0;"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3174" inkscape:collect="always">
+      <stop id="stop3176" offset="0" style="stop-color:#324da7;stop-opacity:0.55"/>
+      <stop id="stop3178" offset="1" style="stop-color:#324da7;stop-opacity:0;"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3190" inkscape:collect="always">
+      <stop id="stop3192" offset="0" style="stop-color:#324da7;stop-opacity:1"/>
+      <stop id="stop3194" offset="1" style="stop-color:#324da7;stop-opacity:0;"/>
+    </linearGradient>
+    <linearGradient id="linearGradient3267" inkscape:collect="always">
+      <stop id="stop3269" offset="0" style="stop-color:#0000ff;stop-opacity:0"/>
+      <stop id="stop3275" offset="0.48768985" style="stop-color:#ffffff;stop-opacity:1"/>
+      <stop id="stop3271" offset="1" style="stop-color:#0000ff;stop-opacity:0;"/>
+    </linearGradient>
+    <inkscape:perspective id="perspective2391" inkscape:persp3d-origin="372.04724 : 350.78739 : 1" inkscape:vp_x="0 : 526.18109 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="744.09448 : 526.18109 : 1" sodipodi:type="inkscape:persp3d"/>
+    <linearGradient gradientTransform="matrix(0.4475832,0,0,1.1594093,-317.72844,-354.23847)" gradientUnits="userSpaceOnUse" id="linearGradient3273" inkscape:collect="always" x1="333.26617" x2="1668.8561" xlink:href="#linearGradient3267" y1="671.26709" y2="671.26709"/>
+    <linearGradient gradientTransform="matrix(0.4475832,0,0,1.1594093,-317.72845,-255.93349)" gradientUnits="userSpaceOnUse" id="linearGradient3463" inkscape:collect="always" x1="333.26617" x2="1668.8561" xlink:href="#linearGradient3267" y1="671.26709" y2="671.26709"/>
+    <linearGradient gradientTransform="translate(-480.00173,0)" gradientUnits="userSpaceOnUse" id="linearGradient3196" inkscape:collect="always" x1="1917.6716" x2="1622.8263" xlink:href="#linearGradient3190" y1="542.59882" y2="542.59882"/>
+    <linearGradient gradientTransform="matrix(-1,0,0,1,1920.0025,7.77e-2)" gradientUnits="userSpaceOnUse" id="linearGradient3200" inkscape:collect="always" x1="1917.6716" x2="1622.8263" xlink:href="#linearGradient3190" y1="542.59882" y2="542.59882"/>
+    <linearGradient gradientUnits="userSpaceOnUse" id="linearGradient3180" inkscape:collect="always" x1="513.01154" x2="513.01154" xlink:href="#linearGradient3174" y1="-540.84637" y2="-636.17462"/>
+    <linearGradient gradientUnits="userSpaceOnUse" id="linearGradient3188" inkscape:collect="always" x1="719.99805" x2="719.99805" xlink:href="#linearGradient3182" y1="-540.84637" y2="-631.5105"/>
+    <linearGradient gradientUnits="userSpaceOnUse" id="linearGradient3197" inkscape:collect="always" x1="513.01154" x2="513.01154" xlink:href="#linearGradient3174" y1="-540.84637" y2="-636.17462"/>
+    <linearGradient gradientUnits="userSpaceOnUse" id="linearGradient3199" inkscape:collect="always" x1="719.99805" x2="719.99805" xlink:href="#linearGradient3182" y1="-540.84637" y2="-631.5105"/>
+    <linearGradient gradientTransform="translate(240.00003,-1.7053223)" gradientUnits="userSpaceOnUse" id="linearGradient2841" inkscape:collect="always" x1="513.01154" x2="513.01154" xlink:href="#linearGradient3174" y1="-540.84637" y2="-636.17462"/>
+    <linearGradient gradientTransform="translate(240.00003,-1.7053223)" gradientUnits="userSpaceOnUse" id="linearGradient2843" inkscape:collect="always" x1="719.99805" x2="719.99805" xlink:href="#linearGradient3182" y1="-540.84637" y2="-631.5105"/>
+    <inkscape:perspective id="perspective2855" inkscape:persp3d-origin="0.5 : 0.33333333 : 1" inkscape:vp_x="0 : 0.5 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="1 : 0.5 : 1" sodipodi:type="inkscape:persp3d"/>
+    <radialGradient cx="922.56451" cy="413.05423" fx="922.56451" fy="413.05423" gradientTransform="matrix(1,0,0,0.05818239,-200.15315,389.02172)" gradientUnits="userSpaceOnUse" id="radialGradient3654" inkscape:collect="always" r="638.25861" xlink:href="#linearGradient3670"/>
+    <inkscape:perspective id="perspective3664" inkscape:persp3d-origin="0.5 : 0.33333333 : 1" inkscape:vp_x="0 : 0.5 : 1" inkscape:vp_y="0 : 1000 : 0" inkscape:vp_z="1 : 0.5 : 1" sodipodi:type="inkscape:persp3d"/>
+    <radialGradient cx="959.99805" cy="514.13556" fx="959.99805" fy="514.13556" gradientTransform="matrix(1,0,0,0.04078534,0,493.16635)" gradientUnits="userSpaceOnUse" id="radialGradient3682" inkscape:collect="always" r="781.3515" xlink:href="#linearGradient3684"/>
+    <filter height="1.5" id="filter3984" inkscape:label="Drop shadow" width="1.5" x="-.25" y="-.25">
+      <feGaussianBlur id="feGaussianBlur3986" in="SourceAlpha" result="blur" stdDeviation="1.000000"/>
+      <feColorMatrix id="feColorMatrix3988" result="bluralpha" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.000000 0 "/>
+      <feOffset dx="0.000000" dy="4.000000" id="feOffset3990" in="bluralpha" result="offsetBlur"/>
+      <feMerge id="feMerge3992">
+        <feMergeNode id="feMergeNode3994" in="offsetBlur"/>
+        <feMergeNode id="feMergeNode3996" in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter height="1.5" id="filter3998" inkscape:label="Drop shadow" width="1.5" x="-.25" y="-.25">
+      <feGaussianBlur id="feGaussianBlur4000" in="SourceAlpha" result="blur" stdDeviation="1.000000"/>
+      <feColorMatrix id="feColorMatrix4002" result="bluralpha" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1.000000 0 "/>
+      <feOffset dx="0.000000" dy="4.000000" id="feOffset4004" in="bluralpha" result="offsetBlur"/>
+      <feMerge id="feMerge4006">
+        <feMergeNode id="feMergeNode4008" in="offsetBlur"/>
+        <feMergeNode id="feMergeNode4010" in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <radialGradient cx="959.99805" cy="514.13556" fx="959.99805" fy="514.13556" gradientTransform="matrix(1,0,0,0.04078534,-398.1953,493.16635)" gradientUnits="userSpaceOnUse" id="radialGradient3039" inkscape:collect="always" r="781.3515" xlink:href="#linearGradient3684"/>
+  </defs>
+  <sodipodi:namedview bordercolor="#666666" borderopacity="1.0" gridtolerance="10000" guidetolerance="10" id="base" inkscape:current-layer="layer1" inkscape:cx="726.17664" inkscape:cy="458.30763" inkscape:document-units="px" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:window-height="1056" inkscape:window-maximized="1" inkscape:window-width="1855" inkscape:window-x="65" inkscape:window-y="24" inkscape:zoom="0.5" objecttolerance="10" pagecolor="#ffffff" showgrid="false"/>
+  <metadata id="metadata2388">
+    <rdf:RDF>
+      <cc:Work rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g id="layer1" inkscape:groupmode="layer" inkscape:label="Layer 1" transform="translate(1.9328e-3,0)">
+    <rect height="1080.0051" id="rect3160" rx="0" ry="0" style="opacity:0;fill:#e0e7ff;fill-opacity:1;stroke:none;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" width="1920" x="-0.0019328" y="-0.0051269531"/>
+    <text id="text2395" sodipodi:linespacing="125%" style="font-size:116.20991516px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:url(#radialGradient3654);fill-opacity:1;stroke:none;filter:url(#filter3998);font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans" x="961.7674" xml:space="preserve" y="438.48804"><tspan id="tspan2397" sodipodi:role="line" style="font-size:82.35334778px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:url(#radialGradient3654);fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold" x="961.7674" y="438.48804">Pennes' Bioheat Equation</tspan></text>
+    <text id="text2395-6" sodipodi:linespacing="125%" style="font-size:116.20991516px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:url(#radialGradient3039);fill-opacity:1;stroke:none;filter:url(#filter3984);font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans" x="959.01288" xml:space="preserve" y="544.8371"><tspan id="tspan2397-3" sodipodi:role="line" style="font-size:82.35334778px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:center;line-height:125%;writing-mode:lr-tb;text-anchor:middle;fill:url(#radialGradient3039);fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold" x="959.01288" y="544.8371">Beer-Lambert's Law</tspan></text>
+  </g>
+</svg>
