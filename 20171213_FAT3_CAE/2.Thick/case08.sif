@@ -1,0 +1,179 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory "case08"
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Steady state
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Solver Input File = case08.sif
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.67e-08
+  Permittivity of Vacuum = 8.8542e-12
+  Boltzmann Constant = 1.3807e-23
+  Unit Charge = 1.602e-19
+$Ambient_Temperature = 25.0
+$HTC = 10.0
+
+$Arterial_temperature = 37.0
+$Arterial_Density = 1049.75
+$Arterial_Heat_Capacity = 3617.0
+
+$function LED(x) {\
+  Depth_Dermis = -0.0015;\
+  Depth_Fat = -0.02;\
+  Depth_Muscle = -0.03;\
+  I0 = 2.0;\
+  sigma = 0.0020;\
+  Ab_Dermis = 11.7;\
+  Ab_Fat = 8.7;\
+  Ab_Muscle = 29.3;\
+  if (x(1)>Depth_Dermis) Q=I0*Ab_Dermis*exp(Ab_Dermis*x(1)-x(0)*x(0)/(2*sigma*sigma));\
+  if (x(1)<(Depth_Dermis+Depth_Fat)) Q=I0*Ab_Muscle*exp(Ab_Muscle*x(1)-x(0)*x(0)/(2*sigma*sigma));\
+  else Q=I0*Ab_Fat*exp(Ab_Fat*x(1)-x(0)*x(0)/(2*sigma*sigma));\
+  _LED = Q;\
+}
+
+$function Perfusion(x) {\
+  Depth_Dermis = -0.0015;\
+  Depth_Fat = -0.02;\
+  Depth_Muscle = -0.03;\
+  Perfusion_Dermis = 0.002;\
+  Perfusion_Fat = 0.00046666667;\
+  Perfusion_Muscle = 0.00063333333;\
+  if (x(1)>Depth_Dermis) P=Perfusion_Dermis;\
+  if (x(1)<(Depth_Dermis+Depth_Fat)) P=Perfusion_Muscle;\
+  else P=Perfusion_Fat;\
+  _Perfusion = P;\
+}
+
+End
+
+Body 1
+  Target Bodies(1) = 8
+  Name = "Body Property 1"
+  Equation = 1
+  Material = 1
+  Body Force = 1
+  Initial condition = 1
+End
+
+Body 2
+  Target Bodies(1) = 9
+  Name = "Body Property 2"
+  Equation = 1
+  Material = 2
+  Body Force = 1
+  Initial condition = 1
+End
+
+Body 3
+  Target Bodies(1) = 10
+  Name = "Body Property 3"
+  Equation = 1
+  Material = 3
+  Body Force = 1
+  Initial condition = 1
+End
+
+Solver 2
+  Equation = Heat Equation
+  Variable = Temperature
+  Procedure = "HeatSolve" "HeatSolver"
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Iterative
+  Linear System Iterative Method = BiCGStab
+  Linear System Max Iterations = 500
+  Linear System Convergence Tolerance = 1.0e-10
+  BiCGstabl polynomial degree = 2
+  Linear System Preconditioning = Diagonal
+  Linear System ILUT Tolerance = 1.0e-3
+  Linear System Abort Not Converged = False
+  Linear System Residual Output = 1
+  Linear System Precondition Recompute = 1
+End
+
+Solver 1
+  Equation = Result Output
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Output Format = Vtu
+  Single Precision = True
+  Output File Name = case
+  Exec Solver = After Timestep
+End
+
+Equation 1
+  Name = "Equation 1"
+  Active Solvers(2) = 2 1
+End
+
+Material 1
+  Name = "Material_Dermis"
+  Heat Conductivity = 0.5 ![W/mK]
+  Heat Capacity = 3150.0 ![J/kg]
+  Porosity Model = Always saturated
+  Density = 1116.0 ![kg/m^3]
+End
+
+Material 2
+  Name = "Material_Fat"
+  Heat Conductivity = 0.28 ![W/mK]
+  Heat Capacity = 2250.0 ![J/kg]
+  Porosity Model = Always saturated
+  Density = 971.0 ![kg/m^3]
+End
+
+Material 3
+  Name = "Material_Muscle"
+  Heat Conductivity = 0.4975 ![W/mK]
+  Heat Capacity = 3430.0 ![J/kg]
+  Porosity Model = Always saturated
+  Density = 1041.0 ![kg/m^3]
+End
+
+Body Force 1
+  Name = "BodyForce_LED"
+  Perfusion Density = $Arterial_Density
+  Perfusion Rate = Variable Coordinate; Real MATC "Perfusion(tx)"
+  Perfusion Reference Temperature = $Arterial_temperature
+  Perfusion Heat Capacity = $Arterial_Heat_Capacity
+End
+
+Initial Condition 1
+  Name = "InitialCondition 1"
+  Temperature = $Ambient_Temperature
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 1 
+  Name = "BoundaryCondition_Dermis_Top"
+  Heat Transfer Coefficient = $HTC
+  External Temperature = $Ambient_Temperature
+End
+
+Boundary Condition 2
+  Target Boundaries(4) = 4 5 6 7 
+  Name = "BoundaryCondition_Adiabatic"
+  Heat Flux = 0.0
+End
