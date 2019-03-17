@@ -14,7 +14,7 @@ Simulation
   Output Intervals = 1
   Timestepping Method = BDF
   BDF Order = 1
-  Solver Input File = case.sif
+  Solver Input File = case03.sif
 End
 
 Constants
@@ -62,7 +62,7 @@ End
 Solver 1
   Equation = Result Output
   Procedure = "ResultOutputSolve" "ResultOutputSolver"
-  Output File Name = case
+  Output File Name = case03
   Output Format = Vtu
   Single Precision = True
   Exec Solver = After Timestep
@@ -70,7 +70,7 @@ End
 
 Equation 1
   Name = "Equation 1"
-  Angular Frequency = Real MATC "2*pi*1000"
+  Angular Frequency = Real MATC "2*pi*3000"
   Active Solvers(2) = 2 1
 End
 
