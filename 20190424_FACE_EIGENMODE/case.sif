@@ -1,0 +1,89 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory ""
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Steady state
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Solver Input File = case.sif
+End
+
+Constants
+  Gravity(4) = 0 -1 0 9.82
+  Stefan Boltzmann = 5.67e-08
+  Permittivity of Vacuum = 8.8542e-12
+  Boltzmann Constant = 1.3807e-23
+  Unit Charge = 1.602e-19
+End
+
+Body 1
+  Target Bodies(1) = 1
+  Name = "Body Property 1"
+  Equation = 1
+  Material = 1
+End
+
+Solver 1
+  Equation = Result Output
+  Eigen Analysis = True
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Single Precision = True
+  Output File Name = case
+  Output Format = Vtu
+  Exec Solver = After Timestep
+End
+
+Solver 2
+  Equation = Linear elasticity
+  Variable = -dofs 3 Displacement
+  Eigen System Values = 50
+  Calculate Loads = True
+  Eigen Analysis = True
+  Procedure = "StressSolve" "StressSolver"
+  Eigen System Select = Smallest real part
+  Calculate Stresses = True
+  Exec Solver = Always
+  Stabilize = True
+  Bubbles = False
+  Lumped Mass Matrix = False
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Direct
+  Linear System Direct Method = MUMPS
+End
+
+Equation 1
+  Name = "Equation 1"
+  Calculate Stresses = True
+  Plane Stress = True
+  Active Solvers(2) = 1 2
+End
+
+Material 1
+  Name = "SiliconRubber"
+  Poisson ratio = 0.47
+  Youngs modulus = 0.001
+  Density = 1220.0
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 2 
+  Name = "FIX"
+  Displacement 2 = 0
+  Displacement 1 = 0
+  Displacement 3 = 0
+End

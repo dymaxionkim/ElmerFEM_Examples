@@ -44,7 +44,8 @@ _Open-source Mechanical Analysis Examples_
   - [Youtube](https://youtu.be/nYHdfdHqo_w)
 * [20160907_Buckling_Submarine](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20160907_Buckling_Submarine)
 * [20161012_Test_Compare](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20161012_Test_Compare)
-
+* [20190316_EAR](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20190316_EAR) : Acoustics using Helmholtz equatiuon around human ear
+* [20190424_FACE_EIGENMODE](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20190424_FACE_EIGENMODE) : Silicon rubber human face's eigenmodes using Linear ealstic solver
 
 ## Thermal Studies
 * [20150610_Convection](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20150610_Convection)
@@ -59,13 +60,9 @@ _Open-source Mechanical Analysis Examples_
 * [20170901_3D_Convection_Turbulence_k-e](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20170901_3D_Convection_Turbulence_k-e) : HeatSink and Fluid Convection
 * [20170918_Thermal](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20170918_Thermal) : Simplified 1-color 5054 LED Package, PCB with copper layer
 * [20170918_Thermal02](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20170918_Thermal02) : Simplified 3-color 5054 LED Package, PCB with copper layer
-
+* [20171213_FAT3_CAE](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20171213_FAT3_CAE) : IR LED light on human skin using bioheat equation
 
 ## Salome Script Studies
 * [20170902_Salome_Script_cad_import](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20170902_Salome_Script_cad_import) : Modified salome multibody CAD import for elmer (V01)
 * [20170911_Salome_Script_STEP2UNV](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20170911_Salome_Script_STEP2UNV) : STEP2UNV for Elmer with Salome (V02)
 * [20170920_Salome_Script_Heatsink4LED](https://github.com/dymaxionkim/ElmerFEM_Examples/tree/master/20170920_Salome_Script_Heatsink4LED) : Heatsink4LED with Salome and Elmer (V01)
-
-
-
-
