@@ -3,12 +3,12 @@
 #################################################
 #
 #   STEP2UNV for Elmer with Salome
-#   V02
+#   V03
 #
-#   Data: 2017-09-12
+#   Data: 2020-03-09
 #   Modifier : DymaxionKim
 #
-#   - Salome 8.2
+#   - Salome 9.4
 #   - Import single STEP assembly file
 #   - Excecute in CUI but not Salome GUI
 #   - Only for STEP format
@@ -35,27 +35,27 @@ notebook = salome_notebook.NoteBook(theStudy)
 #print("\n" * 100)
 print("----------------------------------------------------")
 print("Input your working directory :")
-DIRECTORY = raw_input()
-sys.path.insert( 0, DIRECTORY)
+DIRECTORY = input()
+sys.path.insert(0, DIRECTORY)
 
 # File Name
 print("----------------------------------------------------")
 print("Input your STEP File Name :")
-FILENAME = raw_input()
+FILENAME = input()
 
 # Mesh Parameters
 print("----------------------------------------------------")
 print("----- Mesh Parameters -----")
-MinMeshSize = float(raw_input("MinMeshSize[m] : ")) # specify in m
-MaxMeshSize = float(raw_input("MaxMeshSize[m] : ")) # specify in m
-#MeshSecondOrder = float(raw_input("SetSecondOrder[0,1] : "))
+MinMeshSize = float(input("MinMeshSize[m] : ")) # specify in m
+MaxMeshSize = float(input("MaxMeshSize[m] : ")) # specify in m
+#MeshSecondOrder = float(input("SetSecondOrder[0,1] : "))
 MeshSecondOrder = 1
 print("SetFiness ::: 0=VeryCoarse, 1=Coarse, 2=Moderate, 3=Fine, 4=VeryFine, 5=Custom")
-MeshFineness = float(raw_input("SetFineness[0~5] : "))
+MeshFineness = float(input("SetFineness[0~5] : "))
 if MeshFineness==5:
-	MeshSegPerEdge = float(raw_input("  MeshSegPerEdge[ea] : "))
-	MeshSegPerRadius = float(raw_input("  MeshSegPerRadius[ea] : "))
-	MeshGrowthRate = float(raw_input("  MeshGrowthRate[0~1] : "))
+	MeshSegPerEdge = float(input("  MeshSegPerEdge[ea] : "))
+	MeshSegPerRadius = float(input("  MeshSegPerRadius[ea] : "))
+	MeshGrowthRate = float(input("  MeshGrowthRate[0~1] : "))
 
 
 #################################################
@@ -187,7 +187,7 @@ for fGROUP in range(0,len(MGROUP_FACES)):
 			aFilter.SetMesh(MESH.GetMesh())
 			info = []
 			info = smesh.GetMeshInfo(aFilter)
-			if info.values()[10]: # Dictionary Key : Entity_Quad_Triangle
+			if  info[ SMESH.Entity_Quad_Triangle ]: # Dictionary Key : Entity_Quad_Triangle
 				MGROUP_INTERSECTS.append( MESH.GroupOnFilter( SMESH.FACE, 'INTERSECT{0}'.format(fGROUP+1), aFilter ) )
 
 
@@ -206,39 +206,39 @@ for fGROUP in range(0,len(MGROUP_FACES)):
 	aFilter.SetMesh(MESH.GetMesh())
 	info = []
 	info = smesh.GetMeshInfo(aFilter)
-	if info!=smesh.GetMeshInfo(MGROUP_FACES[fGROUP]) and info.values()[10]:
+	if info!=smesh.GetMeshInfo(MGROUP_FACES[fGROUP]) and info[ SMESH.Entity_Quad_Triangle ]:
 		MGROUP_CUTS.append( MESH.GroupOnFilter( SMESH.FACE, 'CUT{0}'.format(fGROUP+1), aFilter ) )
-
 
 #################################################
 # Make UNV
 #################################################
-FILENAME_HEAD = os.path.splitext(FILENAME)[-2]
+FILENAME_HEAD = os.path.splitext(FILENAME)[0]
 print("----------------------------------------------------")
 print("----- Make UNV ... ")
 try:
-  MESH.ExportUNV( DIRECTORY+"/"+FILENAME_HEAD+".unv")
+	MESH.ExportUNV(DIRECTORY+"/"+FILENAME_HEAD+".unv")
+	#MESH.ExportUNV(FILENAME_HEAD+".unv")
 except:
-  print 'ExportUNV() failed. Invalid file name?'
+	print("ExportUNV() failed. Invalid file name?")
 
 
 #################################################
 # MESH Info
 #################################################
 print("----------------------------------------------------")
-print "Information about mesh:" 
-print "Number of nodes       : ", MESH.NbNodes()
-print "Number of edges       : ", MESH.NbEdges()
-print "Number of faces       : ", MESH.NbFaces()
-print "          triangles   : ", MESH.NbTriangles()
-print "          quadrangles : ", MESH.NbQuadrangles()
-print "          polygons    : ", MESH.NbPolygons()
-print "Number of volumes     : ", MESH.NbVolumes()
-print "          tetrahedrons: ", MESH.NbTetras()
-print "          hexahedrons : ", MESH.NbHexas()
-print "          prisms      : ", MESH.NbPrisms()
-print "          pyramids    : ", MESH.NbPyramids()
-print "          polyhedrons : ", MESH.NbPolyhedrons() 
+print("Information about mesh: ")
+print("Number of nodes       : ", MESH.NbNodes())
+print("Number of edges       : ", MESH.NbEdges())
+print("Number of faces       : ", MESH.NbFaces())
+print("          triangles   : ", MESH.NbTriangles())
+print("          quadrangles : ", MESH.NbQuadrangles())
+print("          polygons    : ", MESH.NbPolygons())
+print("Number of volumes     : ", MESH.NbVolumes())
+print("          tetrahedrons: ", MESH.NbTetras())
+print("          hexahedrons : ", MESH.NbHexas())
+print("          prisms      : ", MESH.NbPrisms())
+print("          pyramids    : ", MESH.NbPyramids())
+print("          polyhedrons : ", MESH.NbPolyhedrons())
 print("----------------------------------------------------")
 print("----- FINISHED ! -----")
 
@@ -248,5 +248,3 @@ print("----- FINISHED ! -----")
 #################################################
 #if salome.sg.hasDesktop():
 #  salome.sg.updateObjBrowser(True)
-
-
