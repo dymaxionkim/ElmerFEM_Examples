@@ -1,5 +1,5 @@
 
-# STEP2UNV for Elmer with Salome (V02)
+# STEP2UNV for Elmer with Salome (V03)
 
 _Import, Grouping and Meshing for a STEP File_
 
@@ -7,7 +7,7 @@ _Import, Grouping and Meshing for a STEP File_
 ## PreRequisite
 * Linux OS / Windows OS
 * ElmerGUI
-* Salome Platform 8.2
+* Salome Platform 9.4
 
 
 ## Install
