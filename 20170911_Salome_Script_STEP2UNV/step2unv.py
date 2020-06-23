@@ -68,7 +68,7 @@ import SALOMEDS
 
 
 # New Study
-geompy = geomBuilder.New(theStudy)
+geompy = geomBuilder.New()
 
 # Read STEP File
 print("----------------------------------------------------")
@@ -123,7 +123,7 @@ import  SMESH, SALOMEDS
 from salome.smesh import smeshBuilder
 
 # New Study
-smesh = smeshBuilder.New(theStudy)
+smesh = smeshBuilder.New()
 
 # New Mesh
 MESH = smesh.Mesh(PARTITION)
