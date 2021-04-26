@@ -1,0 +1,142 @@
+Header
+  CHECK KEYWORDS Warn
+  Mesh DB "." "."
+  Include Path ""
+  Results Directory ""
+End
+
+Simulation
+  Max Output Level = 5
+  Coordinate System = Cartesian
+  Coordinate Mapping(3) = 1 2 3
+  Simulation Type = Transient
+  Steady State Max Iterations = 1
+  Output Intervals = 1
+  Timestep intervals = 50
+  Timestep Sizes = 1
+  Timestepping Method = BDF
+  BDF Order = 1
+  Solver Input File = case.sif
+End
+
+Constants
+End
+
+Body 1
+  Target Bodies(1) = 1
+  Name = "Body 1"
+  Equation = 1
+  Material = 1
+End
+
+Body 2
+  Target Bodies(1) = 21
+  Name = "Body 2"
+  Equation = 1
+  Material = 1
+End
+
+Body 3
+  Target Bodies(1) = 31
+  Name = "Body 3"
+  Equation = 1
+  Material = 1
+End
+
+Solver 2
+  Equation = Nonlinear elasticity
+  Calculate Loads = True
+Nonlinear System Convergence Without Constraints = Logical True
+Apply Contact BCs = Logical True
+  Elasticity Solver Linear = True
+  Calculate Strains = True
+  Variable = -dofs 2 Displacement
+  Calculate Principal = True
+  Calculate Stresses = True
+  Procedure = "ElasticSolve" "ElasticSolver"
+  Exec Solver = Always
+  Stabilize = True
+  Optimize Bandwidth = True
+  Steady State Convergence Tolerance = 1.0e-5
+  Nonlinear System Convergence Tolerance = 1.0e-7
+  Nonlinear System Max Iterations = 20
+  Nonlinear System Newton After Iterations = 3
+  Nonlinear System Newton After Tolerance = 1.0e-3
+  Nonlinear System Relaxation Factor = 1
+  Linear System Solver = Direct
+  Linear System Direct Method = MUMPS
+End
+
+Solver 1
+  Equation = Result Output
+  Output File Name = case
+  Single Precision = True
+  Output Format = Vtu
+  Procedure = "ResultOutputSolve" "ResultOutputSolver"
+  Exec Solver = After Timestep
+End
+
+Equation 1
+  Name = "Equation 1"
+  Plane Stress = True
+  Active Solvers(2) = 2 1
+End
+
+Material 1
+  Name = "Steel (carbon - generic)"
+  Heat Capacity = 1265.0
+  Sound speed = 5100.0
+  Poisson ratio = 0.285
+  Youngs modulus = 200.0e9
+  Heat expansion Coefficient = 13.8e-6
+  Heat Conductivity = 44.8
+  Density = 7850.0
+End
+
+Boundary Condition 1
+  Target Boundaries(1) = 23 
+  Name = "FIX"
+  Displacement 2 = 0
+  Displacement 1 = 0
+  Displacement 3 = 0
+End
+
+Boundary Condition 2
+  Target Boundaries(1) = 33 
+  Name = "MOVE"
+  Displacement 1 = 0
+  Displacement 2 = Variable Time; Real MATC "tx[0]*-1.5e-3/50"
+  Displacement 3 = 0
+End
+
+Boundary Condition 3
+  Target Boundaries(1) = 21 
+  Name = "BOT_MASTER"
+End
+
+Boundary Condition 4
+  Target Boundaries(1) = 31 
+  Name = "TOP_MASTER"
+End
+
+Boundary Condition 5
+  Target Boundaries(2) = 3 4 
+  Name = "BOT_SLAVE"
+Flat Projector = Logical True
+Galerkin Projector = Logical True
+Mortar BC = 3
+Mortar BC Displacement = Logical True  
+Mortar BC Nonlinear = Logical True
+Mortar BC Initial Contact Depth = 0.1e-10
+End
+
+Boundary Condition 6
+  Target Boundaries(2) = 1 2 
+  Name = "TOP_SLAVE"
+Flat Projector = Logical True
+Galerkin Projector = Logical True
+Mortar BC = 4
+Mortar BC Displacement = Logical True  
+Mortar BC Nonlinear = Logical True
+Mortar BC Initial Contact Depth = 0.1e-10
+End
